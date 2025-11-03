@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwimPilot</title>
+    <script>
+        // 브라우저 언어 감지 및 리다이렉트
+        function redirectToLanguage() {
+            // 브라우저 언어 가져오기
+            const userLang = navigator.language || navigator.userLanguage;
+
+            // 언어 코드 추출 (예: "ko-KR" -> "ko", "en-US" -> "en", "zh-CN" -> "zh")
+            const fullLang = userLang.toLowerCase();
+            const langCode = fullLang.split('-')[0];
+
+            // 지원하는 언어 목록 (10개 언어)
+            const supportedLanguages = {
+                'en': 'en',           // English
+                'ko': 'ko',           // Korean
+                'ja': 'ja',           // Japanese
+                'zh': 'zh-Hans',      // Chinese (기본값: 간체)
+                'zh-cn': 'zh-Hans',   // Simplified Chinese
+                'zh-hans': 'zh-Hans', // Simplified Chinese
+                'zh-sg': 'zh-Hans',   // Singapore Chinese
+                'zh-tw': 'zh-Hant',   // Traditional Chinese
+                'zh-hk': 'zh-Hant',   // Hong Kong Chinese
+                'zh-mo': 'zh-Hant',   // Macau Chinese
+                'zh-hant': 'zh-Hant', // Traditional Chinese
+                'es': 'es',           // Spanish
+                'fr': 'fr',           // French
+                'de': 'de',           // German
+                'ru': 'ru',           // Russian
+                'pt': 'pt'            // Portuguese
+            };
+
+            // 기본 언어는 영어
+            let targetLang = 'en';
+
+            // 전체 언어 코드 매칭 시도 (예: zh-CN, zh-TW)
+            if (supportedLanguages[fullLang]) {
+                targetLang = supportedLanguages[fullLang];
+            }
+            // 언어 코드만으로 매칭 시도
+            else if (supportedLanguages[langCode]) {
+                targetLang = supportedLanguages[langCode];
+            }
+
+            // 해당 언어 페이지로 리다이렉트
+            window.location.href = `./${targetLang}.html`;
+        }
+
+        // 페이지 로드 시 즉시 리다이렉트
+        redirectToLanguage();
+    </script>
+</head>
+<body>
+    <p style="text-align: center; margin-top: 50px; font-family: sans-serif; color: #666;">
+        Redirecting...
+    </p>
+</body>
+</html>

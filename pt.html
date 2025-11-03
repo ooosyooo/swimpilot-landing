@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwimPilot — Mil Voltas, Uma Iluminação</title>
+
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .section {
+            min-height: 100vh;
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: clamp(3rem, 8vh, 6rem) clamp(1.5rem, 6vw, 3rem);
+            position: relative;
+            transition: background 0.8s ease;
+            overflow: hidden;
+        }
+
+        /* Light particles - underwater light reflection */
+        .light-particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+            animation: lightDance ease-in-out infinite;
+        }
+
+        @keyframes lightDance {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translate(var(--x1), var(--y1)) scale(1.5);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(var(--x2), var(--y2)) scale(1);
+                opacity: 0.4;
+            }
+            75% {
+                transform: translate(var(--x3), var(--y3)) scale(1.3);
+                opacity: 0.7;
+            }
+        }
+
+        /* Depth layers */
+        .depth-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at var(--pos-x) var(--pos-y),
+                        rgba(255, 255, 255, 0.03) 0%,
+                        transparent 50%);
+            animation: depthShift ease-in-out infinite;
+        }
+
+        @keyframes depthShift {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(1.1);
+            }
+        }
+
+        /* Light reflection on water surface */
+        .light-reflection {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 40%),
+                radial-gradient(ellipse at 70% 60%, rgba(255, 255, 255, 0.08) 0%, transparent 35%),
+                radial-gradient(ellipse at 50% 80%, rgba(255, 255, 255, 0.06) 0%, transparent 30%);
+            animation: reflectionMove 15s ease-in-out infinite;
+            opacity: 0.4;
+        }
+
+        @keyframes reflectionMove {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.3;
+            }
+            33% {
+                transform: translateY(-20px) scale(1.05);
+                opacity: 0.5;
+            }
+            66% {
+                transform: translateY(10px) scale(0.98);
+                opacity: 0.4;
+            }
+        }
+
+        /* Silence trails */
+        .silence-trail {
+            position: absolute;
+            width: 1px;
+            height: 100px;
+            background: linear-gradient(to bottom,
+                        transparent 0%,
+                        rgba(255, 255, 255, 0.4) 30%,
+                        rgba(255, 255, 255, 0.2) 70%,
+                        transparent 100%);
+            animation: trailFade linear infinite;
+            filter: blur(0.5px);
+        }
+
+        @keyframes trailFade {
+            0% {
+                top: -120px;
+                opacity: 0;
+                transform: translateY(0);
+            }
+            15% {
+                opacity: 0.6;
+            }
+            85% {
+                opacity: 0.3;
+            }
+            100% {
+                top: 110vh;
+                opacity: 0;
+                transform: translateY(50px);
+            }
+        }
+
+        /* Sinking lights */
+        .sinking-light {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            animation: sink ease-in infinite;
+        }
+
+        @keyframes sink {
+            0% {
+                top: -50px;
+                opacity: 0.9;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(0.7);
+            }
+            100% {
+                top: 110vh;
+                opacity: 0;
+                transform: scale(0.3);
+            }
+        }
+
+        /* Breath flows */
+        .breath-flow {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(to right,
+                        transparent 0%,
+                        rgba(255, 255, 255, 0.1) 20%,
+                        rgba(255, 255, 255, 0.5) 50%,
+                        rgba(255, 255, 255, 0.1) 80%,
+                        transparent 100%);
+            animation: breathMove ease-in-out infinite;
+            filter: blur(1px);
+        }
+
+        @keyframes breathMove {
+            0% {
+                left: -150%;
+                width: 100px;
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.6;
+                width: 150px;
+            }
+            80% {
+                opacity: 0.4;
+                width: 200px;
+            }
+            100% {
+                left: 150%;
+                width: 100px;
+                opacity: 0;
+            }
+        }
+
+        /* Change waves */
+        .change-wave {
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: changeExpand ease-out infinite;
+        }
+
+        @keyframes changeExpand {
+            0% {
+                width: 10px;
+                height: 10px;
+                opacity: 0;
+                border-width: 1px;
+            }
+            30% {
+                opacity: 0.6;
+            }
+            100% {
+                width: 300px;
+                height: 300px;
+                opacity: 0;
+                border-width: 0.5px;
+            }
+        }
+
+        /* Watch ticks animation */
+        .watch-tick {
+            position: absolute;
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2));
+            transform-origin: center bottom;
+            animation: tickRotate linear infinite;
+        }
+
+        @keyframes tickRotate {
+            0% {
+                transform: rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: rotate(360deg);
+                opacity: 0.3;
+            }
+        }
+
+        /* Pulse rings animation */
+        .pulse-ring {
+            position: absolute;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: pulseExpand ease-out infinite;
+        }
+
+        @keyframes pulseExpand {
+            0% {
+                width: 30px;
+                height: 30px;
+                opacity: 0.8;
+            }
+            100% {
+                width: 120px;
+                height: 120px;
+                opacity: 0;
+            }
+        }
+
+        /* Section backgrounds - seamless gradient connection */
+        #hero {
+            background: linear-gradient(to bottom, #0a1828 0%, #1a3550 60%, #2d5f8d 100%);
+        }
+
+        #philosophy {
+            background: linear-gradient(to bottom, #2d5f8d 0%, #4a7ba7 60%, #5d8db5 100%);
+        }
+
+        #watch {
+            background: linear-gradient(to bottom, #5d8db5 0%, #7aa8c8 60%, #95bed9 100%);
+        }
+
+        #journey {
+            background: linear-gradient(to bottom, #95bed9 0%, #b5d6e8 60%, #d0e8f2 100%);
+        }
+
+        #classes {
+            background: linear-gradient(to bottom, #d0e8f2 0%, #b8dde9 60%, #9ac7db 100%);
+        }
+
+        #growth {
+            background: linear-gradient(to bottom, #9ac7db 0%, #7aafca 60%, #5d98bb 100%);
+        }
+
+        #manifesto {
+            background: linear-gradient(to bottom, #5d98bb 0%, #4a7fa0 60%, #2a5370 100%);
+        }
+
+        #footer {
+            background: linear-gradient(to bottom, #2a5370 0%, #1a3d58 60%, #000000 100%);
+            min-height: 60vh;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            max-width: min(85vw, 900px);
+            width: 100%;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        /* Line by line text */
+        .line {
+            font-size: clamp(2rem, 5.5vw, 3.5rem);
+            line-height: 1.8;
+            margin: clamp(0.3rem, 1vh, 0.6rem) 0;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 400;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        text-shadow 0.3s ease;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Paragraph break - clear spacing */
+        .line.paragraph-break {
+            margin-top: clamp(4rem, 12vh, 8rem);
+        }
+
+        /* Focused text emphasis */
+        .line.focused {
+            text-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+            font-weight: 600;
+        }
+
+        .line.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .line.hidden {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+
+        .line.fading {
+            opacity: 0.3;
+        }
+
+        /* Font size simplification - 3 sizes only */
+
+        /* Default size - most text */
+        .line.small {
+            font-size: clamp(2rem, 5.5vw, 3.5rem);
+            font-weight: 400;
+            line-height: 1.8;
+            text-align: center;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Medium size - important sentences */
+        .line.medium,
+        .line.large {
+            font-size: clamp(2.3rem, 6.5vw, 4.2rem);
+            font-weight: 500;
+            line-height: 1.6;
+            text-align: center;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Emphasis size - key keywords */
+        .line.emphasis {
+            font-size: clamp(2.8rem, 8vw, 5.5rem);
+            font-weight: 700;
+            line-height: 1.4;
+            margin: clamp(1rem, 2.5vh, 1.5rem) auto;
+            text-align: center;
+            max-width: 90%;
+        }
+
+        /* Section text colors - optimized for backgrounds */
+        #hero .line {
+            color: #e8f4f8;
+        }
+
+        #philosophy .line {
+            color: #f0f8fc;
+        }
+
+        #watch .line {
+            color: #0a1828;
+        }
+
+        #journey .line {
+            color: #1e3a5f;
+        }
+
+        #classes .line {
+            color: #0f2d4a;
+        }
+
+        #growth .line {
+            color: #1a3550;
+        }
+
+        #manifesto .line {
+            color: #e0f2f7;
+        }
+
+        #footer .line {
+            color: #a8d8ea;
+        }
+
+        /* Footer - App Store Button */
+        #footer .app-store-button {
+            display: inline-block;
+            margin-top: clamp(2rem, 4vh, 3rem);
+            padding: clamp(1.2rem, 3vw, 1.8rem) clamp(3rem, 8vw, 5rem);
+            background: linear-gradient(135deg, #3a7fa0 0%, #4a9fbf 50%, #66b3d1 100%);
+            border-radius: clamp(1rem, 2vw, 1.5rem);
+            box-shadow: 0 10px 40px rgba(102, 179, 209, 0.4),
+                        0 4px 12px rgba(0, 0, 0, 0.3),
+                        inset 0 2px 4px rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+        }
+
+        #footer.visible .app-store-button {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            transition-delay: 0.3s;
+        }
+
+        #footer .app-store-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        #footer .app-store-button:hover::before {
+            left: 100%;
+        }
+
+        #footer .app-store-button:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(102, 179, 209, 0.6),
+                        0 8px 20px rgba(0, 0, 0, 0.4),
+                        inset 0 2px 4px rgba(255, 255, 255, 0.3);
+        }
+
+        #footer .app-store-button:active {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(102, 179, 209, 0.5),
+                        0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        #footer .button-content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(0.8rem, 2vw, 1.2rem);
+            position: relative;
+            z-index: 1;
+        }
+
+        #footer .app-store-icon {
+            width: clamp(2.5rem, 6vw, 3.5rem);
+            height: clamp(2.5rem, 6vw, 3.5rem);
+            flex-shrink: 0;
+            color: #ffffff;
+        }
+
+        #footer .button-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: clamp(0.2rem, 0.5vh, 0.3rem);
+        }
+
+        #footer .button-label {
+            font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+            color: #e0f2f7;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        #footer .button-title {
+            font-size: clamp(1.3rem, 3.5vw, 2.2rem);
+            color: #ffffff;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        #footer .copyright {
+            margin-top: clamp(4rem, 8vh, 6rem);
+            color: #4a7ba7;
+            font-size: clamp(0.8rem, 2.3vw, 1rem);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        #footer.visible .copyright {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.5s;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: clamp(1.5rem, 4vh, 2rem);
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            transition: opacity 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        .scroll-indicator::after {
+            content: '↓';
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .section {
+                padding: clamp(2rem, 6vh, 4rem) clamp(1.2rem, 5vw, 2rem);
+            }
+
+            .content {
+                max-width: 92vw;
+            }
+
+            .line {
+                max-width: 95%;
+                font-size: clamp(1.6rem, 5.8vw, 2.8rem);
+                line-height: 1.85;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+                font-weight: 500;
+            }
+
+            .line.large,
+            .line.medium,
+            .line.small,
+            .line.emphasis {
+                max-width: 95%;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            #footer .button-label {
+                font-size: clamp(0.7rem, 2vw, 0.85rem);
+            }
+
+            #footer .button-title {
+                font-size: clamp(1.2rem, 4vw, 1.8rem);
+            }
+        }
+
+        @media (min-width: 1920px) {
+            .content {
+                max-width: 1000px;
+            }
+
+            .line {
+                font-size: 3rem;
+                line-height: 2;
+                font-weight: 500;
+            }
+        }
+
+        @media (max-height: 700px) and (orientation: landscape) {
+            .section {
+                min-height: 120vh;
+                padding: clamp(2rem, 4vh, 3rem) clamp(1.5rem, 5vw, 2.5rem);
+            }
+        }
+
+        @media (min-width: 2560px) {
+            .content {
+                max-width: 1200px;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .section {
+                padding: clamp(1.5rem, 5vh, 3rem) clamp(1rem, 4vw, 1.5rem);
+            }
+
+            .content {
+                max-width: 95vw;
+            }
+        }
+
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            #hero h1,
+            #manifesto .line {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section id="hero" class="section">
+        <div class="content" style="margin-top: 25vh;">
+            <p class="line emphasis" id="first-line">SwimPilot</p>
+
+            <p class="line paragraph-break small">Você poderia ter voado pelo céu</p>
+            <p class="line small">Ou corrido pela terra</p>
+
+            <p class="line paragraph-break small">Você escolheu o caminho para as profundezas</p>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section id="philosophy" class="section">
+        <div class="content">
+            <p class="line small">A superfície está cheia de ruído</p>
+            <p class="line small">Mas a água ensina o silêncio</p>
+
+            <p class="line paragraph-break small">As preocupações de ontem</p>
+            <p class="line small">As ansiedades de amanhã</p>
+            <p class="line small">Todas deixadas na superfície</p>
+
+            <p class="line paragraph-break small">Você desce para as profundezas</p>
+        </div>
+    </section>
+
+    <!-- Watch Section -->
+    <section id="watch" class="section">
+        <div class="content">
+            <p class="line small">No seu pulso</p>
+            <p class="line small">Registrando silenciosamente</p>
+
+            <p class="line paragraph-break small">A primeira parede</p>
+            <p class="line small">A centésima respiração</p>
+            <p class="line small">O milésimo silêncio</p>
+
+            <p class="line paragraph-break small">O espelho mostra o mesmo você</p>
+            <p class="line small">Mas a água lembra a mudança</p>
+        </div>
+    </section>
+
+    <!-- Journey Section -->
+    <section id="journey" class="section">
+        <div class="content">
+            <p class="line small">Um dia</p>
+            <p class="line small">Um nome desperta no seu pulso</p>
+
+            <p class="line paragraph-break medium">Nereida</p>
+
+            <p class="line paragraph-break small">A primeira profundidade que você alcançou</p>
+
+            <p class="line paragraph-break small">Mas o oceano apenas começou</p>
+            <p class="line small">Outros nomes dormem em águas mais profundas</p>
+        </div>
+    </section>
+
+    <!-- Classes Section - 13 Depths -->
+    <section id="classes" class="section">
+        <div class="content">
+            <p class="line small">Treze portas</p>
+            <p class="line small">Cada respiração abre uma</p>
+
+            <p class="line paragraph-break small">Transformando você mesmo</p>
+            <p class="line medium">Proteu</p>
+            <p class="line small">O deus sem forma passa</p>
+
+            <p class="line paragraph-break small">No limiar do reino</p>
+            <p class="line medium">Poseidon</p>
+            <p class="line small">Você encontra aquele no trono</p>
+
+            <p class="line paragraph-break small">Finalmente você chega a</p>
+            <p class="line medium">Tiamat</p>
+            <p class="line small">Onde tudo começou</p>
+
+            <p class="line paragraph-break small">Qual porta você pode abrir?</p>
+        </div>
+    </section>
+
+    <!-- Growth Section -->
+    <section id="growth" class="section">
+        <div class="content">
+            <p class="line small">Uma única linha na tela</p>
+
+            <p class="line paragraph-break small">Não apenas um registro</p>
+            <p class="line small">O peso do silêncio que você suportou</p>
+        </div>
+    </section>
+
+    <!-- Manifesto Section -->
+    <section id="manifesto" class="section">
+        <div class="content">
+            <p class="line small">Mesmo após mil nados</p>
+            <p class="line small">O momento perfeito nunca chega</p>
+
+            <p class="line paragraph-break small">Isso é o que a água ensina</p>
+
+            <p class="line paragraph-break emphasis">Belo porque não tem fim</p>
+
+            <p class="line paragraph-break small">Então entramos na água novamente</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <section id="footer" class="section">
+        <div class="content">
+            <a href="https://apps.apple.com/app/swimpilot" class="app-store-button" target="_blank">
+                <div class="button-content">
+                    <svg class="app-store-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" fill="currentColor"/>
+                    </svg>
+                    <div class="button-text">
+                        <span class="button-label">Comece Sua Jornada</span>
+                        <span class="button-title">Baixar SwimPilot</span>
+                    </div>
+                </div>
+            </a>
+            <p class="copyright">
+                © 2025 SwimPilot. All rights reserved.
+            </p>
+        </div>
+    </section>
+
+    <script>
+        // Initialize section animations (create animation containers)
+        function initSectionAnimations() {
+            const sections = document.querySelectorAll('.section');
+
+            sections.forEach((section) => {
+                // Add wave overlay to all sections
+                const waveOverlay = document.createElement('div');
+                waveOverlay.className = 'wave-overlay';
+                section.appendChild(waveOverlay);
+
+                // Create animation container
+                const animationContainer = document.createElement('div');
+                animationContainer.className = 'animation-container';
+                animationContainer.style.position = 'absolute';
+                animationContainer.style.top = '0';
+                animationContainer.style.left = '0';
+                animationContainer.style.width = '100%';
+                animationContainer.style.height = '100%';
+                animationContainer.style.pointerEvents = 'none';
+                section.appendChild(animationContainer);
+            });
+
+            // Intersection Observer to detect current visible section
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const section = entry.target;
+                        const container = section.querySelector('.animation-container');
+
+                        // Remove existing animations
+                        if (container) {
+                            container.innerHTML = '';
+
+                            // Create new animations
+                            const sectionId = section.id;
+                            createAnimationsForSection(container, sectionId);
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.3,
+                rootMargin: '0px'
+            });
+
+            // Start observing all sections
+            sections.forEach(section => sectionObserver.observe(section));
+        }
+
+        // Create emotional animations for each section
+        function createAnimationsForSection(container, sectionId) {
+            // Add light reflection to all sections
+            createLightReflection(container);
+
+            switch(sectionId) {
+                case 'hero':
+                    // First entry - sinking lights and depth
+                    createSinkingLights(container, 8);
+                    createDepthLayers(container, 3);
+                    createLightParticles(container, 20);
+                    break;
+
+                case 'philosophy':
+                    // Silence - slowly fading traces
+                    createSilenceTrails(container, 6);
+                    createLightParticles(container, 15);
+                    createDepthLayers(container, 2);
+                    break;
+
+                case 'watch':
+                    // Flow of time - watch and heartbeat
+                    createWatchTicks(container, 8);
+                    createPulseRings(container, 4);
+                    createLightParticles(container, 12);
+                    break;
+
+                case 'journey':
+                    // Journey - waves of change
+                    createChangeWaves(container, 6);
+                    createBreathFlows(container, 3);
+                    createLightParticles(container, 25);
+                    break;
+
+                case 'classes':
+                    // 13 depths - multiple layers
+                    createDepthLayers(container, 5);
+                    createSilenceTrails(container, 8);
+                    createLightParticles(container, 30);
+                    break;
+
+                case 'growth':
+                    // Growth - breath flows
+                    createBreathFlows(container, 5);
+                    createChangeWaves(container, 4);
+                    createLightParticles(container, 20);
+                    break;
+
+                case 'manifesto':
+                    // Endless beauty - harmony of all effects
+                    createDepthLayers(container, 3);
+                    createChangeWaves(container, 5);
+                    createSilenceTrails(container, 4);
+                    createLightParticles(container, 25);
+                    break;
+
+                case 'footer':
+                    // Closing - peaceful depth
+                    createDepthLayers(container, 2);
+                    createLightParticles(container, 15);
+                    break;
+
+                default:
+                    createLightParticles(container, 20);
+                    createDepthLayers(container, 2);
+            }
+        }
+
+        // Create light reflection
+        function createLightReflection(container) {
+            const reflection = document.createElement('div');
+            reflection.className = 'light-reflection';
+            container.appendChild(reflection);
+        }
+
+        // Create light particles
+        function createLightParticles(container, count) {
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'light-particle';
+
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+
+                const x1 = (Math.random() - 0.5) * 30;
+                const y1 = (Math.random() - 0.5) * 30;
+                const x2 = (Math.random() - 0.5) * 40;
+                const y2 = (Math.random() - 0.5) * 40;
+                const x3 = (Math.random() - 0.5) * 35;
+                const y3 = (Math.random() - 0.5) * 35;
+
+                particle.style.setProperty('--x1', `${x1}px`);
+                particle.style.setProperty('--y1', `${y1}px`);
+                particle.style.setProperty('--x2', `${x2}px`);
+                particle.style.setProperty('--y2', `${y2}px`);
+                particle.style.setProperty('--x3', `${x3}px`);
+                particle.style.setProperty('--y3', `${y3}px`);
+
+                const duration = Math.random() * 4 + 4;
+                particle.style.animationDuration = `${duration}s`;
+
+                const delay = Math.random() * 5;
+                particle.style.animationDelay = `${delay}s`;
+
+                container.appendChild(particle);
+            }
+        }
+
+        // Create depth layers
+        function createDepthLayers(container, count) {
+            for (let i = 0; i < count; i++) {
+                const layer = document.createElement('div');
+                layer.className = 'depth-layer';
+
+                layer.style.setProperty('--pos-x', `${Math.random() * 100}%`);
+                layer.style.setProperty('--pos-y', `${Math.random() * 100}%`);
+
+                const duration = Math.random() * 10 + 15;
+                layer.style.animationDuration = `${duration}s`;
+
+                const delay = Math.random() * 5;
+                layer.style.animationDelay = `${delay}s`;
+
+                container.appendChild(layer);
+            }
+        }
+
+        // Create silence trails
+        function createSilenceTrails(container, count) {
+            const positions = [10, 25, 40, 55, 70, 85];
+            for (let i = 0; i < count; i++) {
+                const trail = document.createElement('div');
+                trail.className = 'silence-trail';
+                trail.style.left = `${positions[i % positions.length]}%`;
+
+                const duration = Math.random() * 5 + 10;
+                trail.style.animationDuration = `${duration}s`;
+
+                const delay = Math.random() * 8;
+                trail.style.animationDelay = `${delay}s`;
+
+                container.appendChild(trail);
+            }
+        }
+
+        // Create sinking lights
+        function createSinkingLights(container, count) {
+            for (let i = 0; i < count; i++) {
+                const light = document.createElement('div');
+                light.className = 'sinking-light';
+
+                light.style.left = `${Math.random() * 100}%`;
+
+                const duration = Math.random() * 8 + 12;
+                light.style.animationDuration = `${duration}s`;
+
+                const delay = Math.random() * 10;
+                light.style.animationDelay = `${delay}s`;
+
+                container.appendChild(light);
+            }
+        }
+
+        // Create breath flows
+        function createBreathFlows(container, count) {
+            for (let i = 0; i < count; i++) {
+                const flow = document.createElement('div');
+                flow.className = 'breath-flow';
+
+                flow.style.top = `${(i + 1) * (100 / (count + 1))}%`;
+
+                const duration = Math.random() * 6 + 10;
+                flow.style.animationDuration = `${duration}s`;
+
+                const delay = Math.random() * 8;
+                flow.style.animationDelay = `${delay}s`;
+
+                container.appendChild(flow);
+            }
+        }
+
+        // Create change waves
+        function createChangeWaves(container, count) {
+            for (let i = 0; i < count; i++) {
+                const wave = document.createElement('div');
+                wave.className = 'change-wave';
+
+                wave.style.left = `${Math.random() * 100}%`;
+                wave.style.top = `${Math.random() * 100}%`;
+
+                const duration = Math.random() * 4 + 6;
+                wave.style.animationDuration = `${duration}s`;
+
+                const delay = Math.random() * 6;
+                wave.style.animationDelay = `${delay}s`;
+
+                container.appendChild(wave);
+            }
+        }
+
+        // Watch section: watch ticks animation
+        function createWatchTicks(container, count) {
+            for (let i = 0; i < count; i++) {
+                const tick = document.createElement('div');
+                tick.className = 'watch-tick';
+
+                tick.style.left = `${Math.random() * 100}%`;
+                tick.style.top = `${Math.random() * 100}%`;
+
+                const duration = Math.random() * 10 + 15;
+                tick.style.animationDuration = `${duration}s`;
+
+                const delay = Math.random() * 5;
+                tick.style.animationDelay = `${delay}s`;
+
+                container.appendChild(tick);
+            }
+        }
+
+        // Watch section: pulse rings animation
+        function createPulseRings(container, count) {
+            for (let i = 0; i < count; i++) {
+                const ring = document.createElement('div');
+                ring.className = 'pulse-ring';
+
+                ring.style.left = `${Math.random() * 100}%`;
+                ring.style.top = `${Math.random() * 100}%`;
+
+                const duration = Math.random() * 1 + 2;
+                ring.style.animationDuration = `${duration}s`;
+
+                const delay = Math.random() * 3;
+                ring.style.animationDelay = `${delay}s`;
+
+                container.appendChild(ring);
+            }
+        }
+
+        // Initialize animations on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initSectionAnimations();
+        });
+
+        // Intersection Observer for individual lines - observe each line individually
+        const lineObserverOptions = {
+            threshold: [0, 0.5, 1], // Multiple thresholds for precise detection
+            rootMargin: '-20% 0px -20% 0px' // Trigger only in center area of screen
+        };
+
+        // Intersection Observer only handles initial observation (opacity handled by scroll)
+        const lineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // Trigger initial rendering
+                updateLineOpacity();
+            });
+        }, lineObserverOptions);
+
+        // Intersection Observer for hero and footer sections
+        const sectionObserverOptions = {
+            threshold: 0.3,
+            rootMargin: '-10% 0px -10% 0px'
+        };
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, sectionObserverOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Observe footer section only
+            const footer = document.querySelector('#footer');
+            if (footer) sectionObserver.observe(footer);
+
+            // Observe all lines individually - observe all .line elements individually
+            const lines = document.querySelectorAll('.line');
+            lines.forEach((line, index) => {
+                lineObserver.observe(line);
+                line.setAttribute('data-line-index', index);
+            });
+
+            // Start at top of page (SwimPilot positioned in center of screen)
+            window.scrollTo({
+                top: 0,
+                behavior: 'instant'
+            });
+
+            // Initial opacity update
+            setTimeout(() => {
+                updateLineOpacity();
+            }, 100);
+
+            console.log(`Observing ${lines.length} lines.`);
+        });
+
+        // Hide scroll indicator after first scroll
+        let scrolled = false;
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+
+        window.addEventListener('scroll', () => {
+            if (!scrolled && window.scrollY > 100) {
+                if (scrollIndicator) {
+                    scrollIndicator.style.opacity = '0';
+                }
+                scrolled = true;
+            }
+        }, { passive: true });
+
+        // Scroll-based opacity calculation
+        function updateLineOpacity() {
+            const windowHeight = window.innerHeight;
+            const viewportCenter = windowHeight / 2;
+
+            document.querySelectorAll('.line').forEach(line => {
+                const rect = line.getBoundingClientRect();
+                const elementCenter = rect.top + rect.height / 2;
+                const distance = Math.abs(elementCenter - viewportCenter);
+                const maxDistance = windowHeight * 0.35; // 35% of screen height range (narrower)
+
+                // Distance-based opacity calculation (closer to center = 1)
+                let opacity = Math.max(0, 1 - (distance / maxDistance));
+                opacity = Math.pow(opacity, 2.5); // More dramatic curve (1.5 → 2.5)
+
+                // Completely transparent if outside screen
+                if (rect.bottom < 0 || rect.top > windowHeight) {
+                    opacity = 0;
+                }
+
+                line.style.opacity = opacity.toString();
+
+                // Adjust transform based on distance as well
+                const translateY = (1 - opacity) * 40; // 30px → 40px (more pronounced movement)
+                line.style.transform = `translateY(${translateY}px)`;
+
+                // Focus effect: add focused class if within 20% range of screen center
+                const focusRange = windowHeight * 0.15;
+                if (distance < focusRange && opacity > 0.8) {
+                    line.classList.add('focused');
+                } else {
+                    line.classList.remove('focused');
+                }
+            });
+        }
+
+        // Scroll performance optimization + opacity update
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    updateLineOpacity();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+
+        // Run on initial load as well
+        window.addEventListener('load', updateLineOpacity);
+    </script>
+</body>
+</html>
