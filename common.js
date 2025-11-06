@@ -132,9 +132,9 @@ function createLightParticles(container, count) {
         const particle = document.createElement('div');
         particle.className = 'light-particle';
 
-        // 중앙에 더 집중되도록 배치 (상단/하단 20% 제외)
+        // 중앙에 더 집중되도록 배치 (상단/하단 25% 제외)
         particle.style.left = `${Math.random() * 100}%`;
-        particle.style.top = `${20 + Math.random() * 60}%`;
+        particle.style.top = `${25 + Math.random() * 50}%`;
 
         const x1 = (Math.random() - 0.5) * 30;
         const y1 = (Math.random() - 0.5) * 30;
@@ -166,9 +166,9 @@ function createDepthLayers(container, count) {
         const layer = document.createElement('div');
         layer.className = 'depth-layer';
 
-        // 중앙에 집중
-        layer.style.setProperty('--pos-x', `${30 + Math.random() * 40}%`);
-        layer.style.setProperty('--pos-y', `${30 + Math.random() * 40}%`);
+        // 중앙에 집중 (상단/하단 25% 제외)
+        layer.style.setProperty('--pos-x', `${35 + Math.random() * 30}%`);
+        layer.style.setProperty('--pos-y', `${35 + Math.random() * 30}%`);
 
         const duration = Math.random() * 15 + 25;
         layer.style.animationDuration = `${duration}s`;
@@ -222,8 +222,8 @@ function createBreathFlows(container, count) {
         const flow = document.createElement('div');
         flow.className = 'breath-flow';
 
-        // 중앙 영역에 배치
-        flow.style.top = `${30 + (i * (40 / count))}%`;
+        // 중앙 영역에 배치 (상단/하단 25% 제외)
+        flow.style.top = `${35 + (i * (30 / count))}%`;
 
         const duration = Math.random() * 10 + 18;
         flow.style.animationDuration = `${duration}s`;
@@ -241,9 +241,9 @@ function createChangeWaves(container, count) {
         const wave = document.createElement('div');
         wave.className = 'change-wave';
 
-        // 중앙에 집중
-        wave.style.left = `${30 + Math.random() * 40}%`;
-        wave.style.top = `${30 + Math.random() * 40}%`;
+        // 중앙에 집중 (상단/하단 25% 제외)
+        wave.style.left = `${35 + Math.random() * 30}%`;
+        wave.style.top = `${35 + Math.random() * 30}%`;
 
         const duration = Math.random() * 8 + 12;
         wave.style.animationDuration = `${duration}s`;
@@ -279,9 +279,9 @@ function createDataPoints(container, count) {
         const point = document.createElement('div');
         point.className = 'data-point';
 
-        // 중앙에 더 집중
-        point.style.left = `${20 + Math.random() * 60}%`;
-        point.style.top = `${20 + Math.random() * 60}%`;
+        // 중앙에 더 집중 (상단/하단 25% 제외)
+        point.style.left = `${25 + Math.random() * 50}%`;
+        point.style.top = `${30 + Math.random() * 40}%`;
 
         const dx1 = (Math.random() - 0.5) * 20;
         const dy1 = (Math.random() - 0.5) * 20;

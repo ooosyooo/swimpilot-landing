@@ -121,21 +121,22 @@ body {
 .silence-trail {
     position: absolute;
     width: 2px;
-    height: 150px;
+    height: 80px;
     background: linear-gradient(to bottom,
                 transparent 0%,
-                rgba(255, 255, 255, 0.7) 30%,
-                rgba(255, 255, 255, 0.5) 50%,
-                rgba(255, 255, 255, 0.3) 70%,
+                transparent 20%,
+                rgba(255, 255, 255, 0.5) 40%,
+                rgba(255, 255, 255, 0.4) 60%,
+                transparent 80%,
                 transparent 100%);
     animation: trailFade linear infinite;
     filter: blur(1px);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 @keyframes trailFade {
     0% {
-        top: 10vh;
+        top: 40vh;
         opacity: 0;
         transform: translateY(0);
     }
@@ -146,7 +147,7 @@ body {
         opacity: 0.4;
     }
     100% {
-        top: 90vh;
+        top: 60vh;
         opacity: 0;
         transform: translateY(50px);
     }
@@ -165,7 +166,7 @@ body {
 
 @keyframes sink {
     0% {
-        top: 10vh;
+        top: 40vh;
         opacity: 0.9;
         transform: scale(1.2);
     }
@@ -174,7 +175,7 @@ body {
         transform: scale(0.8);
     }
     100% {
-        top: 90vh;
+        top: 60vh;
         opacity: 0;
         transform: scale(0.4);
     }
@@ -227,8 +228,8 @@ body {
 
 @keyframes changeExpand {
     0% {
-        width: 20px;
-        height: 20px;
+        width: 10px;
+        height: 10px;
         opacity: 0;
         border-width: 2px;
     }
@@ -239,8 +240,8 @@ body {
         opacity: 0.4;
     }
     100% {
-        width: 400px;
-        height: 400px;
+        width: 200px;
+        height: 200px;
         opacity: 0;
         border-width: 0.5px;
     }
@@ -250,12 +251,15 @@ body {
 .recording-line {
     position: absolute;
     width: 2px;
-    height: 100%;
+    height: 40%;
+    top: 30%;
     background: linear-gradient(to bottom,
                 transparent 0%,
-                rgba(0, 0, 0, 0.15) 20%,
+                transparent 15%,
+                rgba(0, 0, 0, 0.15) 35%,
                 rgba(0, 0, 0, 0.3) 50%,
-                rgba(0, 0, 0, 0.15) 80%,
+                rgba(0, 0, 0, 0.15) 65%,
+                transparent 85%,
                 transparent 100%);
     animation: recordingWave ease-in-out infinite;
     filter: blur(0.5px);
@@ -461,10 +465,10 @@ body {
     transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
                 transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
                 text-shadow 0.3s ease;
-    text-shadow: 0 8px 32px rgba(0, 0, 0, 0.8),
-                0 4px 16px rgba(0, 0, 0, 0.6),
-                0 16px 64px rgba(0, 0, 0, 0.4),
-                0 2px 8px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 0 64px rgba(0, 0, 0, 1),
+                0 0 32px rgba(0, 0, 0, 0.95),
+                0 0 128px rgba(0, 0, 0, 0.85),
+                0 0 16px rgba(0, 0, 0, 0.9);
 }
 
 /* 단락 구분 - 명확한 간격 */
@@ -479,10 +483,10 @@ body {
 
 /* 포커스된 텍스트 강조 */
 .line.focused {
-    text-shadow: 0 16px 64px rgba(0, 0, 0, 0.9),
-                0 8px 32px rgba(0, 0, 0, 0.8),
-                0 24px 96px rgba(0, 0, 0, 0.6),
-                0 4px 16px rgba(0, 0, 0, 0.7);
+    text-shadow: 0 0 128px rgba(0, 0, 0, 1),
+                0 0 64px rgba(0, 0, 0, 1),
+                0 0 192px rgba(0, 0, 0, 0.9),
+                0 0 32px rgba(0, 0, 0, 1);
     font-weight: 600;
 }
 
@@ -546,62 +550,62 @@ body {
 
 #watch .line {
     color: #0a1828;
-    text-shadow: 0 8px 32px rgba(255, 255, 255, 0.8),
-                0 4px 16px rgba(255, 255, 255, 0.6),
-                0 16px 64px rgba(255, 255, 255, 0.4),
-                0 2px 8px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 64px rgba(255, 255, 255, 1),
+                0 0 32px rgba(255, 255, 255, 0.95),
+                0 0 128px rgba(255, 255, 255, 0.85),
+                0 0 16px rgba(255, 255, 255, 0.9);
 }
 
 #watch .line.focused {
-    text-shadow: 0 16px 64px rgba(255, 255, 255, 0.9),
-                0 8px 32px rgba(255, 255, 255, 0.8),
-                0 24px 96px rgba(255, 255, 255, 0.6),
-                0 4px 16px rgba(255, 255, 255, 0.7);
+    text-shadow: 0 0 128px rgba(255, 255, 255, 1),
+                0 0 64px rgba(255, 255, 255, 1),
+                0 0 192px rgba(255, 255, 255, 0.9),
+                0 0 32px rgba(255, 255, 255, 1);
 }
 
 #journey .line {
     color: #1e3a5f;
-    text-shadow: 0 8px 32px rgba(255, 255, 255, 0.8),
-                0 4px 16px rgba(255, 255, 255, 0.6),
-                0 16px 64px rgba(255, 255, 255, 0.4),
-                0 2px 8px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 64px rgba(255, 255, 255, 1),
+                0 0 32px rgba(255, 255, 255, 0.95),
+                0 0 128px rgba(255, 255, 255, 0.85),
+                0 0 16px rgba(255, 255, 255, 0.9);
 }
 
 #journey .line.focused {
-    text-shadow: 0 16px 64px rgba(255, 255, 255, 0.9),
-                0 8px 32px rgba(255, 255, 255, 0.8),
-                0 24px 96px rgba(255, 255, 255, 0.6),
-                0 4px 16px rgba(255, 255, 255, 0.7);
+    text-shadow: 0 0 128px rgba(255, 255, 255, 1),
+                0 0 64px rgba(255, 255, 255, 1),
+                0 0 192px rgba(255, 255, 255, 0.9),
+                0 0 32px rgba(255, 255, 255, 1);
 }
 
 #classes .line {
     color: #0f2d4a;
-    text-shadow: 0 8px 32px rgba(255, 255, 255, 0.8),
-                0 4px 16px rgba(255, 255, 255, 0.6),
-                0 16px 64px rgba(255, 255, 255, 0.4),
-                0 2px 8px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 64px rgba(255, 255, 255, 1),
+                0 0 32px rgba(255, 255, 255, 0.95),
+                0 0 128px rgba(255, 255, 255, 0.85),
+                0 0 16px rgba(255, 255, 255, 0.9);
 }
 
 #classes .line.focused {
-    text-shadow: 0 16px 64px rgba(255, 255, 255, 0.9),
-                0 8px 32px rgba(255, 255, 255, 0.8),
-                0 24px 96px rgba(255, 255, 255, 0.6),
-                0 4px 16px rgba(255, 255, 255, 0.7);
+    text-shadow: 0 0 128px rgba(255, 255, 255, 1),
+                0 0 64px rgba(255, 255, 255, 1),
+                0 0 192px rgba(255, 255, 255, 0.9),
+                0 0 32px rgba(255, 255, 255, 1);
 }
 
 #growth .line {
     color: #1a3550;
-    text-shadow: 0 8px 32px rgba(255, 255, 255, 0.8),
-                0 4px 16px rgba(255, 255, 255, 0.6),
-                0 16px 64px rgba(255, 255, 255, 0.4),
-                0 2px 8px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 64px rgba(255, 255, 255, 1),
+                0 0 32px rgba(255, 255, 255, 0.95),
+                0 0 128px rgba(255, 255, 255, 0.85),
+                0 0 16px rgba(255, 255, 255, 0.9);
 }
 
 #growth .line.focused {
-    text-shadow: 0 16px 64px rgba(255, 255, 255, 0.9),
-                0 8px 32px rgba(255, 255, 255, 0.8),
-                0 24px 96px rgba(255, 255, 255, 0.6),
-                0 4px 16px rgba(255, 255, 255, 0.7);
+    text-shadow: 0 0 128px rgba(255, 255, 255, 1),
+                0 0 64px rgba(255, 255, 255, 1),
+                0 0 192px rgba(255, 255, 255, 0.9),
+                0 0 32px rgba(255, 255, 255, 1);
 }
 
 #manifesto .line {
@@ -701,7 +705,7 @@ body {
     color: #ffffff;
     font-weight: 600;
     letter-spacing: -0.01em;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 0 16px rgba(0, 0, 0, 0.8);
 }
 
 #footer .copyright {
@@ -802,6 +806,28 @@ body {
 
     #footer .button-title {
         font-size: clamp(1.2rem, 4vw, 1.8rem);
+    }
+
+    /* 모바일에서 파동 원 크기 제한 */
+    @keyframes changeExpand {
+        0% {
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+            border-width: 2px;
+        }
+        30% {
+            opacity: 0.7;
+        }
+        70% {
+            opacity: 0.4;
+        }
+        100% {
+            width: 33vw;
+            height: 33vw;
+            opacity: 0;
+            border-width: 0.5px;
+        }
     }
 }
 
