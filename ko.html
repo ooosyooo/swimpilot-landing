@@ -289,6 +289,93 @@
             }
         }
 
+        /* Manifesto 전용 - 깊이로 빨려들어가는 소용돌이 */
+        .vortex-ring {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: vortexSpin ease-in infinite;
+        }
+
+        @keyframes vortexSpin {
+            0% {
+                width: 800px;
+                height: 800px;
+                opacity: 0;
+                transform: translate(-50%, -50%) rotate(0deg) scale(1);
+                border-width: 2px;
+            }
+            30% {
+                opacity: 0.6;
+                border-width: 1.5px;
+            }
+            100% {
+                width: 0px;
+                height: 0px;
+                opacity: 0;
+                transform: translate(-50%, -50%) rotate(720deg) scale(0);
+                border-width: 0px;
+            }
+        }
+
+        /* 중심으로 모이는 빛 입자 */
+        .converging-light {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            animation: converge ease-in infinite;
+        }
+
+        @keyframes converge {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0) scale(1);
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--target-x), var(--target-y)) scale(0);
+            }
+        }
+
+        /* 폭발하는 빛 - 중심에서 퍼져나감 */
+        .exploding-light {
+            position: absolute;
+            width: 2px;
+            height: 60px;
+            background: linear-gradient(to top,
+                        rgba(255, 255, 255, 0) 0%,
+                        rgba(255, 255, 255, 0.9) 50%,
+                        rgba(255, 255, 255, 0) 100%);
+            transform-origin: center bottom;
+            animation: explode ease-out infinite;
+            filter: blur(1px);
+        }
+
+        @keyframes explode {
+            0% {
+                height: 0px;
+                opacity: 0;
+                transform: translateY(0) scale(1);
+            }
+            30% {
+                opacity: 1;
+            }
+            100% {
+                height: 200px;
+                opacity: 0;
+                transform: translateY(-100px) scale(0.5);
+            }
+        }
+
         /* Section backgrounds - 매우 자연스러운 그라데이션 연결 */
         #hero {
             background: linear-gradient(to bottom, #0a1828 0%, #1a3550 60%, #2d5f8d 100%);
@@ -348,17 +435,28 @@
             transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
                         transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
                         text-shadow 0.3s ease;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-shadow: 0 8px 32px rgba(0, 0, 0, 0.8),
+                        0 4px 16px rgba(0, 0, 0, 0.6),
+                        0 16px 64px rgba(0, 0, 0, 0.4),
+                        0 2px 8px rgba(0, 0, 0, 0.5);
         }
 
         /* 단락 구분 - 명확한 간격 */
         .line.paragraph-break {
-            margin-top: clamp(4rem, 12vh, 8rem);
+            margin-top: clamp(6rem, 16vh, 10rem);
+        }
+
+        /* Manifesto 섹션 마지막 문장 전 특별 간격 */
+        #manifesto .line.final-break {
+            margin-top: clamp(12rem, 32vh, 20rem);
         }
 
         /* 포커스된 텍스트 강조 */
         .line.focused {
-            text-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 16px 64px rgba(0, 0, 0, 0.9),
+                        0 8px 32px rgba(0, 0, 0, 0.8),
+                        0 24px 96px rgba(0, 0, 0, 0.6),
+                        0 4px 16px rgba(0, 0, 0, 0.7);
             font-weight: 600;
         }
 
@@ -422,18 +520,62 @@
 
         #watch .line {
             color: #0a1828;
+            text-shadow: 0 8px 32px rgba(255, 255, 255, 0.8),
+                        0 4px 16px rgba(255, 255, 255, 0.6),
+                        0 16px 64px rgba(255, 255, 255, 0.4),
+                        0 2px 8px rgba(255, 255, 255, 0.5);
+        }
+
+        #watch .line.focused {
+            text-shadow: 0 16px 64px rgba(255, 255, 255, 0.9),
+                        0 8px 32px rgba(255, 255, 255, 0.8),
+                        0 24px 96px rgba(255, 255, 255, 0.6),
+                        0 4px 16px rgba(255, 255, 255, 0.7);
         }
 
         #journey .line {
             color: #1e3a5f;
+            text-shadow: 0 8px 32px rgba(255, 255, 255, 0.8),
+                        0 4px 16px rgba(255, 255, 255, 0.6),
+                        0 16px 64px rgba(255, 255, 255, 0.4),
+                        0 2px 8px rgba(255, 255, 255, 0.5);
+        }
+
+        #journey .line.focused {
+            text-shadow: 0 16px 64px rgba(255, 255, 255, 0.9),
+                        0 8px 32px rgba(255, 255, 255, 0.8),
+                        0 24px 96px rgba(255, 255, 255, 0.6),
+                        0 4px 16px rgba(255, 255, 255, 0.7);
         }
 
         #classes .line {
             color: #0f2d4a;
+            text-shadow: 0 8px 32px rgba(255, 255, 255, 0.8),
+                        0 4px 16px rgba(255, 255, 255, 0.6),
+                        0 16px 64px rgba(255, 255, 255, 0.4),
+                        0 2px 8px rgba(255, 255, 255, 0.5);
+        }
+
+        #classes .line.focused {
+            text-shadow: 0 16px 64px rgba(255, 255, 255, 0.9),
+                        0 8px 32px rgba(255, 255, 255, 0.8),
+                        0 24px 96px rgba(255, 255, 255, 0.6),
+                        0 4px 16px rgba(255, 255, 255, 0.7);
         }
 
         #growth .line {
             color: #1a3550;
+            text-shadow: 0 8px 32px rgba(255, 255, 255, 0.8),
+                        0 4px 16px rgba(255, 255, 255, 0.6),
+                        0 16px 64px rgba(255, 255, 255, 0.4),
+                        0 2px 8px rgba(255, 255, 255, 0.5);
+        }
+
+        #growth .line.focused {
+            text-shadow: 0 16px 64px rgba(255, 255, 255, 0.9),
+                        0 8px 32px rgba(255, 255, 255, 0.8),
+                        0 24px 96px rgba(255, 255, 255, 0.6),
+                        0 4px 16px rgba(255, 255, 255, 0.7);
         }
 
         #manifesto .line {
@@ -695,7 +837,8 @@
             <p class="line paragraph-break small">하늘을 날거나</p>
             <p class="line small">땅을 달릴 수도 있었습니다</p>
 
-            <p class="line paragraph-break small">당신은 깊이로 향하는 길을 택했습니다</p>
+            <p class="line paragraph-break small">그러나 당신은</p>
+            <p class="line small">깊이로 향하는 길을 택했습니다</p>
         </div>
         <div class="scroll-indicator"></div>
     </section>
@@ -720,9 +863,9 @@
             <p class="line small">손목에서</p>
             <p class="line small">말없이 기록됩니다</p>
 
-            <p class="line paragraph-break small">첫 번째 벽</p>
-            <p class="line small">백 번째 숨</p>
-            <p class="line small">천 번째 적막</p>
+            <p class="line paragraph-break small">하나의 벽</p>
+            <p class="line small">수많은 숨</p>
+            <p class="line small">끝없는 적막</p>
 
             <p class="line paragraph-break small">거울은 같은 당신을 비추지만</p>
             <p class="line small">물은 변화를 기억합니다</p>
@@ -750,7 +893,7 @@
             <p class="line small">열세 개의 문</p>
             <p class="line small">숨을 멈출 때마다 하나씩 열립니다</p>
 
-            <p class="line paragraph-break small">스스로를 바꾸며</p>
+            <p class="line paragraph-break small">스스로를 바꾸는</p>
             <p class="line medium">프로테우스</p>
             <p class="line small">형태 없는 신을 지나</p>
 
@@ -782,11 +925,7 @@
             <p class="line small">천 번을 헤엄쳐도</p>
             <p class="line small">완벽한 순간은 오지 않습니다</p>
 
-            <p class="line paragraph-break small">그것이 물이 가르치는 것입니다</p>
-
-            <p class="line paragraph-break emphasis">끝이 없기에 아름답습니다</p>
-
-            <p class="line paragraph-break small">그래서 우리는 다시 물에 듭니다</p>
+            <p class="line paragraph-break final-break medium">그래서 우리는 다시 물에 듭니다</p>
         </div>
     </section>
 
@@ -908,11 +1047,12 @@
                     break;
 
                 case 'manifesto':
-                    // 끝이 없는 아름다움 - 모든 효과 조화
-                    createDepthLayers(container, 3);
-                    createChangeWaves(container, 5);
-                    createSilenceTrails(container, 4);
-                    createLightParticles(container, 25);
+                    // 강렬한 피날레 - 소용돌이와 빛의 폭발
+                    createVortexRings(container, 6);          // 중심으로 빨려들어가는 소용돌이
+                    createConvergingLights(container, 24);    // 가장자리에서 중심으로 모이는 빛
+                    createExplodingLights(container, 16);     // 중심에서 폭발하는 빛
+                    createDepthLayers(container, 4);
+                    createLightParticles(container, 30);
                     break;
 
                 case 'footer':
@@ -1094,6 +1234,79 @@
                 ring.style.animationDelay = `${delay}s`;
 
                 container.appendChild(ring);
+            }
+        }
+
+        // Manifesto 전용: 소용돌이 링 (중심으로 빨려들어감)
+        function createVortexRings(container, count) {
+            for (let i = 0; i < count; i++) {
+                const ring = document.createElement('div');
+                ring.className = 'vortex-ring';
+
+                const duration = Math.random() * 4 + 6;
+                ring.style.animationDuration = `${duration}s`;
+
+                const delay = i * 1.5; // 순차적으로 나타남
+                ring.style.animationDelay = `${delay}s`;
+
+                container.appendChild(ring);
+            }
+        }
+
+        // Manifesto 전용: 중심으로 모이는 빛
+        function createConvergingLights(container, count) {
+            const centerX = 0;
+            const centerY = 0;
+
+            for (let i = 0; i < count; i++) {
+                const light = document.createElement('div');
+                light.className = 'converging-light';
+
+                // 화면 가장자리에서 시작
+                const angle = (i / count) * Math.PI * 2;
+                const radius = 50; // vh 단위
+                const startX = Math.cos(angle) * radius;
+                const startY = Math.sin(angle) * radius;
+
+                light.style.left = `calc(50% + ${startX}vh)`;
+                light.style.top = `calc(50% + ${startY}vh)`;
+
+                // 중심으로 향하는 벡터
+                light.style.setProperty('--target-x', `${-startX}vh`);
+                light.style.setProperty('--target-y', `${-startY}vh`);
+
+                const duration = Math.random() * 2 + 3;
+                light.style.animationDuration = `${duration}s`;
+
+                const delay = Math.random() * 4;
+                light.style.animationDelay = `${delay}s`;
+
+                container.appendChild(light);
+            }
+        }
+
+        // Manifesto 전용: 폭발하는 빛 (중심에서 방사형으로)
+        function createExplodingLights(container, count) {
+            for (let i = 0; i < count; i++) {
+                const light = document.createElement('div');
+                light.className = 'exploding-light';
+
+                // 중심에서 시작
+                light.style.left = '50%';
+                light.style.top = '50%';
+
+                // 방사형 각도
+                const angle = (i / count) * 360;
+                light.style.transform = `rotate(${angle}deg)`;
+                light.style.transformOrigin = 'center bottom';
+
+                const duration = Math.random() * 1.5 + 2;
+                light.style.animationDuration = `${duration}s`;
+
+                const delay = Math.random() * 3;
+                light.style.animationDelay = `${delay}s`;
+
+                container.appendChild(light);
             }
         }
 

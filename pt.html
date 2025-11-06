@@ -288,6 +288,93 @@
             }
         }
 
+        /* Manifesto exclusive - vortex spinning into depth */
+        .vortex-ring {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: vortexSpin ease-in infinite;
+        }
+
+        @keyframes vortexSpin {
+            0% {
+                width: 800px;
+                height: 800px;
+                opacity: 0;
+                transform: translate(-50%, -50%) rotate(0deg) scale(1);
+                border-width: 2px;
+            }
+            30% {
+                opacity: 0.6;
+                border-width: 1.5px;
+            }
+            100% {
+                width: 0px;
+                height: 0px;
+                opacity: 0;
+                transform: translate(-50%, -50%) rotate(720deg) scale(0);
+                border-width: 0px;
+            }
+        }
+
+        /* Converging light particles toward center */
+        .converging-light {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            animation: converge ease-in infinite;
+        }
+
+        @keyframes converge {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0) scale(1);
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--target-x), var(--target-y)) scale(0);
+            }
+        }
+
+        /* Exploding light - radiating from center */
+        .exploding-light {
+            position: absolute;
+            width: 2px;
+            height: 60px;
+            background: linear-gradient(to top,
+                        rgba(255, 255, 255, 0) 0%,
+                        rgba(255, 255, 255, 0.9) 50%,
+                        rgba(255, 255, 255, 0) 100%);
+            transform-origin: center bottom;
+            animation: explode ease-out infinite;
+            filter: blur(1px);
+        }
+
+        @keyframes explode {
+            0% {
+                height: 0px;
+                opacity: 0;
+                transform: translateY(0) scale(1);
+            }
+            30% {
+                opacity: 1;
+            }
+            100% {
+                height: 200px;
+                opacity: 0;
+                transform: translateY(-100px) scale(0.5);
+            }
+        }
+
         /* Section backgrounds - seamless gradient connection */
         #hero {
             background: linear-gradient(to bottom, #0a1828 0%, #1a3550 60%, #2d5f8d 100%);
@@ -345,17 +432,28 @@
             transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
                         transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
                         text-shadow 0.3s ease;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-shadow: 0 8px 32px rgba(0, 0, 0, 0.8),
+                        0 4px 16px rgba(0, 0, 0, 0.6),
+                        0 16px 64px rgba(0, 0, 0, 0.4),
+                        0 2px 8px rgba(0, 0, 0, 0.5);
         }
 
         /* Paragraph break - clear spacing */
         .line.paragraph-break {
-            margin-top: clamp(4rem, 12vh, 8rem);
+            margin-top: clamp(6rem, 16vh, 10rem);
+        }
+
+        /* Manifesto section final break special spacing */
+        #manifesto .line.final-break {
+            margin-top: clamp(12rem, 32vh, 20rem);
         }
 
         /* Focused text emphasis */
         .line.focused {
-            text-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 16px 64px rgba(0, 0, 0, 0.9),
+                        0 8px 32px rgba(0, 0, 0, 0.8),
+                        0 24px 96px rgba(0, 0, 0, 0.6),
+                        0 4px 16px rgba(0, 0, 0, 0.7);
             font-weight: 600;
         }
 
@@ -419,18 +517,62 @@
 
         #watch .line {
             color: #0a1828;
+            text-shadow: 0 8px 32px rgba(255, 255, 255, 0.8),
+                        0 4px 16px rgba(255, 255, 255, 0.6),
+                        0 16px 64px rgba(255, 255, 255, 0.4),
+                        0 2px 8px rgba(255, 255, 255, 0.5);
+        }
+
+        #watch .line.focused {
+            text-shadow: 0 16px 64px rgba(255, 255, 255, 0.9),
+                        0 8px 32px rgba(255, 255, 255, 0.8),
+                        0 24px 96px rgba(255, 255, 255, 0.6),
+                        0 4px 16px rgba(255, 255, 255, 0.7);
         }
 
         #journey .line {
             color: #1e3a5f;
+            text-shadow: 0 8px 32px rgba(255, 255, 255, 0.8),
+                        0 4px 16px rgba(255, 255, 255, 0.6),
+                        0 16px 64px rgba(255, 255, 255, 0.4),
+                        0 2px 8px rgba(255, 255, 255, 0.5);
+        }
+
+        #journey .line.focused {
+            text-shadow: 0 16px 64px rgba(255, 255, 255, 0.9),
+                        0 8px 32px rgba(255, 255, 255, 0.8),
+                        0 24px 96px rgba(255, 255, 255, 0.6),
+                        0 4px 16px rgba(255, 255, 255, 0.7);
         }
 
         #classes .line {
             color: #0f2d4a;
+            text-shadow: 0 8px 32px rgba(255, 255, 255, 0.8),
+                        0 4px 16px rgba(255, 255, 255, 0.6),
+                        0 16px 64px rgba(255, 255, 255, 0.4),
+                        0 2px 8px rgba(255, 255, 255, 0.5);
+        }
+
+        #classes .line.focused {
+            text-shadow: 0 16px 64px rgba(255, 255, 255, 0.9),
+                        0 8px 32px rgba(255, 255, 255, 0.8),
+                        0 24px 96px rgba(255, 255, 255, 0.6),
+                        0 4px 16px rgba(255, 255, 255, 0.7);
         }
 
         #growth .line {
             color: #1a3550;
+            text-shadow: 0 8px 32px rgba(255, 255, 255, 0.8),
+                        0 4px 16px rgba(255, 255, 255, 0.6),
+                        0 16px 64px rgba(255, 255, 255, 0.4),
+                        0 2px 8px rgba(255, 255, 255, 0.5);
+        }
+
+        #growth .line.focused {
+            text-shadow: 0 16px 64px rgba(255, 255, 255, 0.9),
+                        0 8px 32px rgba(255, 255, 255, 0.8),
+                        0 24px 96px rgba(255, 255, 255, 0.6),
+                        0 4px 16px rgba(255, 255, 255, 0.7);
         }
 
         #manifesto .line {
@@ -694,9 +836,9 @@
             <p class="line small">No seu pulso</p>
             <p class="line small">Registrando silenciosamente</p>
 
-            <p class="line paragraph-break small">A primeira parede</p>
-            <p class="line small">A centésima respiração</p>
-            <p class="line small">O milésimo silêncio</p>
+            <p class="line paragraph-break small">Uma parede</p>
+            <p class="line small">Inúmeras respirações</p>
+            <p class="line small">Silêncio sem fim</p>
 
             <p class="line paragraph-break small">O espelho mostra o mesmo você</p>
             <p class="line small">Mas a água lembra a mudança</p>
@@ -882,11 +1024,12 @@
                     break;
 
                 case 'manifesto':
-                    // Endless beauty - harmony of all effects
-                    createDepthLayers(container, 3);
-                    createChangeWaves(container, 5);
-                    createSilenceTrails(container, 4);
-                    createLightParticles(container, 25);
+                    // Intense finale - vortex and light explosion
+                    createVortexRings(container, 6);          // Vortex spiraling to center
+                    createConvergingLights(container, 24);    // Lights converging from edges
+                    createExplodingLights(container, 16);     // Lights exploding from center
+                    createDepthLayers(container, 4);
+                    createLightParticles(container, 30);
                     break;
 
                 case 'footer':
@@ -1068,6 +1211,79 @@
                 ring.style.animationDelay = `${delay}s`;
 
                 container.appendChild(ring);
+            }
+        }
+
+        // Manifesto exclusive: vortex rings (spiraling to center)
+        function createVortexRings(container, count) {
+            for (let i = 0; i < count; i++) {
+                const ring = document.createElement('div');
+                ring.className = 'vortex-ring';
+
+                const duration = Math.random() * 4 + 6;
+                ring.style.animationDuration = `${duration}s`;
+
+                const delay = i * 1.5; // Sequential appearance
+                ring.style.animationDelay = `${delay}s`;
+
+                container.appendChild(ring);
+            }
+        }
+
+        // Manifesto exclusive: converging lights toward center
+        function createConvergingLights(container, count) {
+            const centerX = 0;
+            const centerY = 0;
+
+            for (let i = 0; i < count; i++) {
+                const light = document.createElement('div');
+                light.className = 'converging-light';
+
+                // Start from screen edges
+                const angle = (i / count) * Math.PI * 2;
+                const radius = 50; // vh units
+                const startX = Math.cos(angle) * radius;
+                const startY = Math.sin(angle) * radius;
+
+                light.style.left = `calc(50% + ${startX}vh)`;
+                light.style.top = `calc(50% + ${startY}vh)`;
+
+                // Vector toward center
+                light.style.setProperty('--target-x', `${-startX}vh`);
+                light.style.setProperty('--target-y', `${-startY}vh`);
+
+                const duration = Math.random() * 2 + 3;
+                light.style.animationDuration = `${duration}s`;
+
+                const delay = Math.random() * 4;
+                light.style.animationDelay = `${delay}s`;
+
+                container.appendChild(light);
+            }
+        }
+
+        // Manifesto exclusive: exploding lights (radiating from center)
+        function createExplodingLights(container, count) {
+            for (let i = 0; i < count; i++) {
+                const light = document.createElement('div');
+                light.className = 'exploding-light';
+
+                // Start from center
+                light.style.left = '50%';
+                light.style.top = '50%';
+
+                // Radial angle
+                const angle = (i / count) * 360;
+                light.style.transform = `rotate(${angle}deg)`;
+                light.style.transformOrigin = 'center bottom';
+
+                const duration = Math.random() * 1.5 + 2;
+                light.style.animationDuration = `${duration}s`;
+
+                const delay = Math.random() * 3;
+                light.style.animationDelay = `${delay}s`;
+
+                container.appendChild(light);
             }
         }
 
