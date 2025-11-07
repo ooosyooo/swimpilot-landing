@@ -782,7 +782,7 @@ body {
 
     .line {
         max-width: 95%;
-        font-size: clamp(1.6rem, 5.8vw, 2.8rem);
+        font-size: clamp(1.07rem, 3.87vw, 1.87rem);
         line-height: 1.85;
         text-align: center;
         margin-left: auto;
