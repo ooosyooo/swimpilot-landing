@@ -3,139 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SwimPilot — 千次游泳，一次頓悟</title>
+    <title>SwimPilot — 通往深處的道路</title>
 
-    <!-- Google Fonts Preconnect -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Common Styles -->
     <link rel="stylesheet" href="common.css">
 </head>
 <body>
     <!-- Hero Section -->
-    <section id="hero" class="section">
-        <div class="content" style="margin-top: 25vh;">
-            <p class="line emphasis" id="first-line">SwimPilot</p>
-
-            <p class="line paragraph-break small">你本可以翱翔天際</p>
-            <p class="line small">或馳騁大地</p>
-
-            <p class="line paragraph-break small">卻選擇了深海之路</p>
-        </div>
+    <section class="hero">
+        <h1 class="hero-title">SwimPilot</h1>
+        <p class="hero-subtitle">
+            你本可以飛越天空<br>
+            或是奔跑在大地上<br><br>
+            但你選擇了<br>
+            通往深處的道路
+        </p>
         <div class="scroll-indicator"></div>
     </section>
 
-    <!-- Philosophy Section -->
-    <section id="philosophy" class="section">
-        <div class="content">
-            <p class="line small">水面充滿喧囂</p>
-            <p class="line small">而水教會沉默</p>
-
-            <p class="line paragraph-break small">昨日的煩惱</p>
-            <p class="line small">明日的焦慮</p>
-            <p class="line small">皆留在水面</p>
-
-            <p class="line paragraph-break small">你沉入深處</p>
+    <!-- Core Section -->
+    <section class="core">
+        <div class="core-block">
+            <h2 class="core-title">在沉默中</h2>
+            <p class="core-text">
+                地面充滿噪音<br>
+                但水教會沉默<br><br>
+                昨日的憂慮<br>
+                明日的焦慮<br>
+                都留在水面<br><br>
+                你<strong>下潛至深處</strong>
+            </p>
         </div>
-    </section>
 
-    <!-- Watch Section -->
-    <section id="watch" class="section">
-        <div class="content">
-            <p class="line small">在你手腕上</p>
-            <p class="line small">靜靜記錄</p>
-
-            <p class="line paragraph-break small">一道牆</p>
-            <p class="line small">無數次呼吸</p>
-            <p class="line small">無盡的寂靜</p>
-
-            <p class="line paragraph-break small">鏡子映出相同的你</p>
-            <p class="line small">但水記得改變</p>
-        </div>
-    </section>
-
-    <!-- Journey Section -->
-    <section id="journey" class="section">
-        <div class="content">
-            <p class="line small">某一天</p>
-            <p class="line small">手腕上的名字甦醒</p>
-
-            <p class="line paragraph-break medium">涅瑞伊得斯</p>
-
-            <p class="line paragraph-break small">你觸及的第一個深度</p>
-
-            <p class="line paragraph-break small">但海洋才剛剛開始</p>
-            <p class="line small">更多名字沉睡在更深的水中</p>
-        </div>
-    </section>
-
-    <!-- Classes Section - 13 Depths -->
-    <section id="classes" class="section">
-        <div class="content">
-            <p class="line small">十三道門</p>
-            <p class="line small">每一次呼吸打開一道</p>
-
-            <p class="line paragraph-break small">變化中的自我</p>
-            <p class="line medium">普洛透斯</p>
-            <p class="line small">無形之神經過</p>
-
-            <p class="line paragraph-break small">在王國門檻</p>
-            <p class="line medium">波塞冬</p>
-            <p class="line small">遇見王座上的那位</p>
-
-            <p class="line paragraph-break small">最終抵達</p>
-            <p class="line medium">提亞瑪特</p>
-            <p class="line small">萬物起源之地</p>
-
-            <p class="line paragraph-break small">你能打開哪道門?</p>
-        </div>
-    </section>
-
-    <!-- Growth Section -->
-    <section id="growth" class="section">
-        <div class="content">
-            <p class="line small">螢幕上的一條線</p>
-
-            <p class="line paragraph-break small">不只是記錄</p>
-            <p class="line small">是你承受的沉默之重</p>
-        </div>
-    </section>
-
-    <!-- Manifesto Section -->
-    <section id="manifesto" class="section">
-        <div class="content">
-            <p class="line small">游過千次</p>
-            <p class="line small">完美時刻永不到來</p>
-
-            <p class="line paragraph-break small">這是水的教誨</p>
-
-            <p class="line paragraph-break emphasis">因無盡而美麗</p>
-
-            <p class="line paragraph-break small">所以再次入水</p>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <section id="footer" class="section">
-        <div class="content">
-            <a href="https://apps.apple.com/app/id6752946670" class="app-store-button" target="_blank">
-                <div class="button-content">
-                    <svg class="app-store-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" fill="currentColor"/>
-                    </svg>
-                    <div class="button-text">
-                        <span class="button-label">開啟旅程</span>
-                        <span class="button-title">下載 SwimPilot</span>
-                    </div>
-                </div>
-            </a>
-            <p class="copyright">
-                © 2025 SwimPilot. All rights reserved.
+        <div class="core-block">
+            <h2 class="core-title">因為不完美</h2>
+            <p class="core-text">
+                手腕上靜靜記錄<br>
+                一面牆，無數次呼吸，無盡的寧靜<br><br>
+                游過千圈<br>
+                完美的時刻永不到來<br><br>
+                所以我們<strong>再次入水</strong>
             </p>
         </div>
     </section>
 
+    <!-- CTA Section -->
+    <section class="cta">
+        <p class="cta-message">
+            千次呼吸<br>
+            一次蛻變
+        </p>
+        <a href="https://apps.apple.com/app/id6752946670" class="app-store-button" target="_blank">
+            <svg class="app-store-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" fill="currentColor"/>
+            </svg>
+            開始使用 SwimPilot
+        </a>
+        <p class="copyright">© 2025 SwimPilot. All rights reserved.</p>
+    </section>
+
+    <!-- Common Scripts -->
     <script src="common.js"></script>
 </body>
 </html>

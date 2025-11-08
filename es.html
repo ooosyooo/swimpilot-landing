@@ -3,139 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SwimPilot — Mil Vueltas, Una Iluminación</title>
+    <title>SwimPilot — El Camino a la Profundidad</title>
 
-    <!-- Google Fonts Preconnect -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Common Styles -->
     <link rel="stylesheet" href="common.css">
 </head>
 <body>
     <!-- Hero Section -->
-    <section id="hero" class="section">
-        <div class="content" style="margin-top: 25vh;">
-            <p class="line emphasis" id="first-line">SwimPilot</p>
-
-            <p class="line paragraph-break small">Podrías haber volado por el cielo</p>
-            <p class="line small">O corrido por la tierra</p>
-
-            <p class="line paragraph-break small">Elegiste el camino hacia las profundidades</p>
-        </div>
+    <section class="hero">
+        <h1 class="hero-title">SwimPilot</h1>
+        <p class="hero-subtitle">
+            Podrías haber volado por el cielo<br>
+            o corrido por la tierra<br><br>
+            Pero elegiste<br>
+            el camino a la profundidad
+        </p>
         <div class="scroll-indicator"></div>
     </section>
 
-    <!-- Philosophy Section -->
-    <section id="philosophy" class="section">
-        <div class="content">
-            <p class="line small">La superficie está llena de ruido</p>
-            <p class="line small">Pero el agua enseña el silencio</p>
-
-            <p class="line paragraph-break small">Las preocupaciones de ayer</p>
-            <p class="line small">Las ansiedades de mañana</p>
-            <p class="line small">Todas quedan en la superficie</p>
-
-            <p class="line paragraph-break small">Desciendes a las profundidades</p>
+    <!-- Core Section -->
+    <section class="core">
+        <div class="core-block">
+            <h2 class="core-title">En Silencio</h2>
+            <p class="core-text">
+                La superficie está llena de ruido<br>
+                pero el agua enseña silencio<br><br>
+                Las preocupaciones de ayer<br>
+                las ansiedades de mañana<br>
+                todo dejado en la superficie<br><br>
+                Tú <strong>desciendes a la profundidad</strong>
+            </p>
         </div>
-    </section>
 
-    <!-- Watch Section -->
-    <section id="watch" class="section">
-        <div class="content">
-            <p class="line small">En tu muñeca</p>
-            <p class="line small">Registrando en silencio</p>
-
-            <p class="line paragraph-break small">Una pared</p>
-            <p class="line small">Innumerables respiraciones</p>
-            <p class="line small">Silencio sin fin</p>
-
-            <p class="line paragraph-break small">El espejo muestra el mismo tú</p>
-            <p class="line small">Pero el agua recuerda el cambio</p>
-        </div>
-    </section>
-
-    <!-- Journey Section -->
-    <section id="journey" class="section">
-        <div class="content">
-            <p class="line small">Un día</p>
-            <p class="line small">Un nombre despierta en tu muñeca</p>
-
-            <p class="line paragraph-break medium">Nereida</p>
-
-            <p class="line paragraph-break small">La primera profundidad que alcanzaste</p>
-
-            <p class="line paragraph-break small">Pero el océano acaba de comenzar</p>
-            <p class="line small">Otros nombres duermen en aguas más profundas</p>
-        </div>
-    </section>
-
-    <!-- Classes Section - 13 Depths -->
-    <section id="classes" class="section">
-        <div class="content">
-            <p class="line small">Trece puertas</p>
-            <p class="line small">Cada respiración abre una</p>
-
-            <p class="line paragraph-break small">Transformándote a ti mismo</p>
-            <p class="line medium">Proteo</p>
-            <p class="line small">El dios sin forma pasa</p>
-
-            <p class="line paragraph-break small">En el umbral del reino</p>
-            <p class="line medium">Poseidón</p>
-            <p class="line small">Conoces al que está en el trono</p>
-
-            <p class="line paragraph-break small">Finalmente llegas a</p>
-            <p class="line medium">Tiamat</p>
-            <p class="line small">Donde todo comenzó</p>
-
-            <p class="line paragraph-break small">¿Qué puerta puedes abrir?</p>
-        </div>
-    </section>
-
-    <!-- Growth Section -->
-    <section id="growth" class="section">
-        <div class="content">
-            <p class="line small">Una sola línea en la pantalla</p>
-
-            <p class="line paragraph-break small">No solo un registro</p>
-            <p class="line small">El peso del silencio que soportaste</p>
-        </div>
-    </section>
-
-    <!-- Manifesto Section -->
-    <section id="manifesto" class="section">
-        <div class="content">
-            <p class="line small">Incluso después de mil nados</p>
-            <p class="line small">El momento perfecto nunca llega</p>
-
-            <p class="line paragraph-break small">Eso es lo que enseña el agua</p>
-
-            <p class="line paragraph-break emphasis">Hermoso porque no tiene fin</p>
-
-            <p class="line paragraph-break small">Así que entramos al agua de nuevo</p>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <section id="footer" class="section">
-        <div class="content">
-            <a href="https://apps.apple.com/app/id6752946670" class="app-store-button" target="_blank">
-                <div class="button-content">
-                    <svg class="app-store-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" fill="currentColor"/>
-                    </svg>
-                    <div class="button-text">
-                        <span class="button-label">Comienza Tu Viaje</span>
-                        <span class="button-title">Descargar SwimPilot</span>
-                    </div>
-                </div>
-            </a>
-            <p class="copyright">
-                © 2025 SwimPilot. All rights reserved.
+        <div class="core-block">
+            <h2 class="core-title">Porque No Es Perfecto</h2>
+            <p class="core-text">
+                Silenciosamente grabado en tu muñeca<br>
+                Una pared, incontables respiraciones, quietud infinita<br><br>
+                Mil vueltas<br>
+                y la perfección nunca llega<br><br>
+                Por eso <strong>volvemos al agua</strong>
             </p>
         </div>
     </section>
 
+    <!-- CTA Section -->
+    <section class="cta">
+        <p class="cta-message">
+            Mil respiraciones<br>
+            Una transformación
+        </p>
+        <a href="https://apps.apple.com/app/id6752946670" class="app-store-button" target="_blank">
+            <svg class="app-store-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" fill="currentColor"/>
+            </svg>
+            Comenzar SwimPilot
+        </a>
+        <p class="copyright">© 2025 SwimPilot. All rights reserved.</p>
+    </section>
+
+    <!-- Common Scripts -->
     <script src="common.js"></script>
 </body>
 </html>

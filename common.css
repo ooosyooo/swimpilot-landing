@@ -1,11 +1,9 @@
-/* SwimPilot Common Styles */
+/* SwimPilot Common Styles - 3 Section Design */
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
 }
 
 html {
@@ -13,868 +11,341 @@ html {
 }
 
 body {
-    font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-                 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-    overflow-x: hidden;
-}
-
-.section {
-    min-height: 100vh;
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: clamp(3rem, 8vh, 6rem) clamp(1.5rem, 6vw, 3rem);
-    position: relative;
-    transition: background 0.8s ease;
-    overflow: hidden;
-}
-
-/* Animation Elements */
-
-/* 빛의 입자 - 물속 빛 반사 */
-.light-particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 50%;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.5);
-    animation: lightDance ease-in-out infinite;
-}
-
-@keyframes lightDance {
-    0%, 100% {
-        transform: translate(0, 0) scale(1);
-        opacity: 0.4;
-    }
-    25% {
-        transform: translate(var(--x1), var(--y1)) scale(2);
-        opacity: 0.9;
-    }
-    50% {
-        transform: translate(var(--x2), var(--y2)) scale(1.2);
-        opacity: 0.5;
-    }
-    75% {
-        transform: translate(var(--x3), var(--y3)) scale(1.8);
-        opacity: 0.8;
-    }
-}
-
-/* 깊이감 있는 레이어 */
-.depth-layer {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(ellipse at var(--pos-x) var(--pos-y),
-                rgba(255, 255, 255, 0.08) 0%,
-                rgba(255, 255, 255, 0.03) 30%,
-                transparent 60%);
-    animation: depthShift ease-in-out infinite;
-}
-
-@keyframes depthShift {
-    0%, 100% {
-        opacity: 0.4;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 0.8;
-        transform: scale(1.15);
-    }
-}
-
-/* 수면 위 빛 반사 */
-.light-reflection {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    background:
-        radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 40%),
-        radial-gradient(ellipse at 70% 60%, rgba(255, 255, 255, 0.08) 0%, transparent 35%),
-        radial-gradient(ellipse at 50% 80%, rgba(255, 255, 255, 0.06) 0%, transparent 30%);
-    animation: reflectionMove 15s ease-in-out infinite;
-    opacity: 0.4;
-}
-
-@keyframes reflectionMove {
-    0%, 100% {
-        transform: translateY(0) scale(1);
-        opacity: 0.25;
-    }
-    33% {
-        transform: translateY(-20px) scale(1.05);
-        opacity: 0.4;
-    }
-    66% {
-        transform: translateY(10px) scale(0.98);
-        opacity: 0.3;
-    }
-}
-
-/* 침묵의 흔적 - 서서히 사라지는 궤적 */
-.silence-trail {
-    position: absolute;
-    width: 2px;
-    height: 80px;
-    background: linear-gradient(to bottom,
-                transparent 0%,
-                transparent 20%,
-                rgba(255, 255, 255, 0.5) 40%,
-                rgba(255, 255, 255, 0.4) 60%,
-                transparent 80%,
-                transparent 100%);
-    animation: trailFade linear infinite;
-    filter: blur(1px);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-}
-
-@keyframes trailFade {
-    0% {
-        top: 40vh;
-        opacity: 0;
-        transform: translateY(0);
-    }
-    15% {
-        opacity: 0.7;
-    }
-    85% {
-        opacity: 0.4;
-    }
-    100% {
-        top: 60vh;
-        opacity: 0;
-        transform: translateY(50px);
-    }
-}
-
-/* 깊이로 가라앉는 빛 */
-.sinking-light {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background: rgba(255, 255, 255, 1);
-    border-radius: 50%;
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.5);
-    animation: sink ease-in infinite;
-}
-
-@keyframes sink {
-    0% {
-        top: 40vh;
-        opacity: 0.9;
-        transform: scale(1.2);
-    }
-    50% {
-        opacity: 0.6;
-        transform: scale(0.8);
-    }
-    100% {
-        top: 60vh;
-        opacity: 0;
-        transform: scale(0.4);
-    }
-}
-
-/* 숨결의 흐름 - 수평으로 흐르는 빛 */
-.breath-flow {
-    position: absolute;
-    height: 3px;
-    background: linear-gradient(to right,
-                transparent 0%,
-                rgba(255, 255, 255, 0.3) 20%,
-                rgba(255, 255, 255, 0.9) 50%,
-                rgba(255, 255, 255, 0.3) 80%,
-                transparent 100%);
-    animation: breathMove ease-in-out infinite;
-    filter: blur(2px);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
-}
-
-@keyframes breathMove {
-    0% {
-        left: -150%;
-        width: 100px;
-        opacity: 0;
-    }
-    20% {
-        opacity: 0.7;
-        width: 150px;
-    }
-    80% {
-        opacity: 0.5;
-        width: 200px;
-    }
-    100% {
-        left: 150%;
-        width: 100px;
-        opacity: 0;
-    }
-}
-
-/* 변화의 파장 - 미묘하게 퍼지는 원 */
-.change-wave {
-    position: absolute;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    animation: changeExpand ease-out infinite;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-}
-
-@keyframes changeExpand {
-    0% {
-        width: 10px;
-        height: 10px;
-        opacity: 0;
-        border-width: 2px;
-    }
-    30% {
-        opacity: 0.7;
-    }
-    70% {
-        opacity: 0.4;
-    }
-    100% {
-        width: 200px;
-        height: 200px;
-        opacity: 0;
-        border-width: 0.5px;
-    }
-}
-
-/* Watch 섹션 전용 - 물결치는 수직선 (기록의 흔적) */
-.recording-line {
-    position: absolute;
-    width: 2px;
-    height: 40%;
-    top: 30%;
-    background: linear-gradient(to bottom,
-                transparent 0%,
-                transparent 15%,
-                rgba(0, 0, 0, 0.15) 35%,
-                rgba(0, 0, 0, 0.3) 50%,
-                rgba(0, 0, 0, 0.15) 65%,
-                transparent 85%,
-                transparent 100%);
-    animation: recordingWave ease-in-out infinite;
-    filter: blur(0.5px);
-}
-
-@keyframes recordingWave {
-    0%, 100% {
-        transform: translateX(0) scaleY(1);
-        opacity: 0.4;
-    }
-    25% {
-        transform: translateX(-3px) scaleY(0.98);
-        opacity: 0.6;
-    }
-    50% {
-        transform: translateX(0) scaleY(1.02);
-        opacity: 0.7;
-    }
-    75% {
-        transform: translateX(3px) scaleY(0.98);
-        opacity: 0.6;
-    }
-}
-
-/* Watch 섹션 전용 - 떠다니는 점 (데이터 포인트) */
-.data-point {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 50%;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-    animation: dataFloat ease-in-out infinite;
-}
-
-@keyframes dataFloat {
-    0%, 100% {
-        transform: translate(0, 0) scale(1);
-        opacity: 0.5;
-    }
-    33% {
-        transform: translate(var(--dx1), var(--dy1)) scale(1.3);
-        opacity: 0.8;
-    }
-    66% {
-        transform: translate(var(--dx2), var(--dy2)) scale(0.9);
-        opacity: 0.6;
-    }
-}
-
-/* Manifesto 전용 - 깊이로 빨려들어가는 소용돌이 */
-.vortex-ring {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    border: 4px solid rgba(255, 255, 255, 0.6);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    animation: vortexSpin ease-in infinite;
-    box-shadow: 0 0 40px rgba(255, 255, 255, 0.4), inset 0 0 40px rgba(255, 255, 255, 0.2);
-}
-
-@keyframes vortexSpin {
-    0% {
-        width: 800px;
-        height: 800px;
-        opacity: 0;
-        transform: translate(-50%, -50%) rotate(0deg) scale(1);
-        border-width: 4px;
-    }
-    30% {
-        opacity: 0.7;
-        border-width: 3px;
-    }
-    70% {
-        opacity: 0.4;
-    }
-    100% {
-        width: 0px;
-        height: 0px;
-        opacity: 0;
-        transform: translate(-50%, -50%) rotate(720deg) scale(0);
-        border-width: 0px;
-    }
-}
-
-/* 중심으로 모이는 빛 입자 */
-.converging-light {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background: rgba(255, 255, 255, 1);
-    border-radius: 50%;
-    box-shadow: 0 0 40px rgba(255, 255, 255, 1), 0 0 80px rgba(255, 255, 255, 0.6);
-    animation: converge ease-in infinite;
-}
-
-@keyframes converge {
-    0% {
-        opacity: 0;
-        transform: translate(0, 0) scale(1.5);
-    }
-    20% {
-        opacity: 0.8;
-    }
-    80% {
-        opacity: 0.6;
-    }
-    100% {
-        opacity: 0;
-        transform: translate(var(--target-x), var(--target-y)) scale(0);
-    }
-}
-
-/* 폭발하는 빛 - 중심에서 퍼져나감 */
-.exploding-light {
-    position: absolute;
-    width: 4px;
-    height: 80px;
-    background: linear-gradient(to top,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 1) 50%,
-                rgba(255, 255, 255, 0) 100%);
-    transform-origin: center bottom;
-    animation: explode ease-out infinite;
-    filter: blur(2px);
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
-}
-
-@keyframes explode {
-    0% {
-        height: 0px;
-        opacity: 0;
-        transform: translateY(0) scale(1);
-    }
-    30% {
-        opacity: 0.8;
-    }
-    70% {
-        opacity: 0.5;
-    }
-    100% {
-        height: 300px;
-        opacity: 0;
-        transform: translateY(-150px) scale(0.5);
-    }
-}
-
-/* Section backgrounds - 완벽하게 연결된 그라데이션 */
-#hero {
-    background: linear-gradient(to bottom, #0a1828 0%, #1a3550 50%, #2d5f8d 100%);
-}
-
-#philosophy {
-    background: linear-gradient(to bottom, #2d5f8d 0%, #4a7ba7 50%, #5d8db5 100%);
-}
-
-#watch {
-    background: linear-gradient(to bottom, #5d8db5 0%, #7aa8c8 50%, #95bed9 100%);
-}
-
-#journey {
-    background: linear-gradient(to bottom, #95bed9 0%, #b5d6e8 50%, #d0e8f2 100%);
-}
-
-#classes {
-    background: linear-gradient(to bottom, #d0e8f2 0%, #b8dde9 50%, #9ac7db 100%);
-}
-
-#growth {
-    background: linear-gradient(to bottom, #9ac7db 0%, #7aafca 50%, #5d98bb 100%);
-}
-
-#manifesto {
-    background: linear-gradient(to bottom, #5d98bb 0%, #4a7fa0 50%, #2a5370 100%);
-}
-
-#footer {
-    background: linear-gradient(to bottom, #2a5370 0%, #1a3d58 50%, #0a1828 100%);
-    min-height: 60vh;
-}
-
-.content {
-    position: relative;
-    z-index: 1;
-    max-width: min(85vw, 900px);
-    width: 100%;
-    text-align: center;
-    margin: 0 auto;
-}
-
-/* Line by line text */
-.line {
-    font-size: clamp(2rem, 5.5vw, 3.5rem);
-    line-height: 1.8;
-    margin: clamp(0.3rem, 1vh, 0.6rem) 0;
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    font-weight: 400;
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-                transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-                text-shadow 0.3s ease;
-    text-shadow: 0 0 64px rgba(0, 0, 0, 1),
-                0 0 32px rgba(0, 0, 0, 0.95),
-                0 0 128px rgba(0, 0, 0, 0.85),
-                0 0 16px rgba(0, 0, 0, 0.9);
-}
-
-/* 단락 구분 - 명확한 간격 */
-.line.paragraph-break {
-    margin-top: clamp(6rem, 16vh, 10rem);
-}
-
-/* Manifesto 섹션 마지막 문장 전 특별 간격 */
-#manifesto .line.final-break {
-    margin-top: clamp(8rem, 21.3vh, 13.3rem);
-}
-
-/* 포커스된 텍스트 강조 */
-.line.focused {
-    text-shadow: 0 0 128px rgba(0, 0, 0, 1),
-                0 0 64px rgba(0, 0, 0, 1),
-                0 0 192px rgba(0, 0, 0, 0.9),
-                0 0 32px rgba(0, 0, 0, 1);
-    font-weight: 600;
-}
-
-.line.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.line.hidden {
-    opacity: 0;
-    transform: translateY(-30px);
-}
-
-.line.fading {
-    opacity: 0.3;
-}
-
-/* 폰트 크기 단순화 - 3가지만 사용 */
-
-/* 기본 크기 - 대부분의 텍스트 */
-.line.small {
-    font-size: clamp(2rem, 5.5vw, 3.5rem);
-    font-weight: 400;
-    line-height: 1.8;
-    text-align: center;
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* 중간 크기 - 중요한 문장 */
-.line.medium,
-.line.large {
-    font-size: clamp(2.3rem, 6.5vw, 4.2rem);
-    font-weight: 500;
-    line-height: 1.6;
-    text-align: center;
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* 강조 크기 - 핵심 키워드 */
-.line.emphasis {
-    font-size: clamp(2.8rem, 8vw, 5.5rem);
-    font-weight: 700;
-    line-height: 1.4;
-    margin: clamp(1rem, 2.5vh, 1.5rem) auto;
-    text-align: center;
-    max-width: 90%;
-}
-
-/* 섹션별 텍스트 색상 - 배경색에 최적화 */
-#hero .line {
-    color: #e8f4f8;
-}
-
-#philosophy .line {
-    color: #f0f8fc;
-}
-
-#watch .line {
-    color: #0a1828;
-    text-shadow: 0 0 64px rgba(255, 255, 255, 1),
-                0 0 32px rgba(255, 255, 255, 0.95),
-                0 0 128px rgba(255, 255, 255, 0.85),
-                0 0 16px rgba(255, 255, 255, 0.9);
-}
-
-#watch .line.focused {
-    text-shadow: 0 0 128px rgba(255, 255, 255, 1),
-                0 0 64px rgba(255, 255, 255, 1),
-                0 0 192px rgba(255, 255, 255, 0.9),
-                0 0 32px rgba(255, 255, 255, 1);
-}
-
-#journey .line {
-    color: #1e3a5f;
-    text-shadow: 0 0 64px rgba(255, 255, 255, 1),
-                0 0 32px rgba(255, 255, 255, 0.95),
-                0 0 128px rgba(255, 255, 255, 0.85),
-                0 0 16px rgba(255, 255, 255, 0.9);
-}
-
-#journey .line.focused {
-    text-shadow: 0 0 128px rgba(255, 255, 255, 1),
-                0 0 64px rgba(255, 255, 255, 1),
-                0 0 192px rgba(255, 255, 255, 0.9),
-                0 0 32px rgba(255, 255, 255, 1);
-}
-
-#classes .line {
-    color: #0f2d4a;
-    text-shadow: 0 0 64px rgba(255, 255, 255, 1),
-                0 0 32px rgba(255, 255, 255, 0.95),
-                0 0 128px rgba(255, 255, 255, 0.85),
-                0 0 16px rgba(255, 255, 255, 0.9);
-}
-
-#classes .line.focused {
-    text-shadow: 0 0 128px rgba(255, 255, 255, 1),
-                0 0 64px rgba(255, 255, 255, 1),
-                0 0 192px rgba(255, 255, 255, 0.9),
-                0 0 32px rgba(255, 255, 255, 1);
-}
-
-#growth .line {
-    color: #1a3550;
-    text-shadow: 0 0 64px rgba(255, 255, 255, 1),
-                0 0 32px rgba(255, 255, 255, 0.95),
-                0 0 128px rgba(255, 255, 255, 0.85),
-                0 0 16px rgba(255, 255, 255, 0.9);
-}
-
-#growth .line.focused {
-    text-shadow: 0 0 128px rgba(255, 255, 255, 1),
-                0 0 64px rgba(255, 255, 255, 1),
-                0 0 192px rgba(255, 255, 255, 0.9),
-                0 0 32px rgba(255, 255, 255, 1);
-}
-
-#manifesto .line {
-    color: #e0f2f7;
-}
-
-#footer .line {
-    color: #a8d8ea;
-}
-
-/* Footer - App Store Button */
-#footer .app-store-button {
-    display: inline-block;
-    margin-top: clamp(2rem, 4vh, 3rem);
-    padding: clamp(1.2rem, 3vw, 1.8rem) clamp(3rem, 8vw, 5rem);
-    background: linear-gradient(135deg, #3a7fa0 0%, #4a9fbf 50%, #66b3d1 100%);
-    border-radius: clamp(1rem, 2vw, 1.5rem);
-    box-shadow: 0 10px 40px rgba(102, 179, 209, 0.4),
-                0 4px 12px rgba(0, 0, 0, 0.3),
-                inset 0 2px 4px rgba(255, 255, 255, 0.2);
-    text-decoration: none;
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    position: relative;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(40px) scale(0.95);
-}
-
-#footer.visible .app-store-button {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    transition-delay: 0.3s;
-}
-
-#footer .app-store-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.6s ease;
-}
-
-#footer .app-store-button:hover::before {
-    left: 100%;
-}
-
-#footer .app-store-button:hover {
-    transform: translateY(-6px) scale(1.05);
-    box-shadow: 0 20px 60px rgba(102, 179, 209, 0.6),
-                0 8px 20px rgba(0, 0, 0, 0.4),
-                inset 0 2px 4px rgba(255, 255, 255, 0.3);
-}
-
-#footer .app-store-button:active {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 12px 40px rgba(102, 179, 209, 0.5),
-                0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-#footer .button-content {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: clamp(0.8rem, 2vw, 1.2rem);
-    position: relative;
-    z-index: 1;
-}
-
-#footer .app-store-icon {
-    width: clamp(2.5rem, 6vw, 3.5rem);
-    height: clamp(2.5rem, 6vw, 3.5rem);
-    flex-shrink: 0;
+    font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(to bottom, #05445e 0%, #189ab4 40%, #75e6da 70%, #189ab4 100%);
     color: #ffffff;
+    overflow-x: hidden;
+    line-height: 1.8;
 }
 
-#footer .button-text {
+/* Hero Section */
+.hero {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: clamp(0.2rem, 0.5vh, 0.3rem);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
 }
 
-#footer .button-label {
-    font-size: clamp(0.75rem, 1.8vw, 0.95rem);
-    color: #e0f2f7;
+.hero-title {
+    font-size: clamp(4rem, 12vw, 10rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeInUp 1.5s ease forwards;
+    background: linear-gradient(135deg, #ffffff 0%, #e0f7fa 25%, #b3e5fc 50%, #80deea 75%, #4dd0e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 200%;
+    animation: fadeInUp 1.5s ease forwards, gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.hero-subtitle {
+    font-size: clamp(1.2rem, 3vw, 2rem);
     font-weight: 300;
     letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
-
-#footer .button-title {
-    font-size: clamp(1.3rem, 3.5vw, 2.2rem);
-    color: #ffffff;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    text-shadow: 0 0 16px rgba(0, 0, 0, 0.8);
-}
-
-#footer .copyright {
-    margin-top: clamp(4rem, 8vh, 6rem);
-    color: #4a7ba7;
-    font-size: clamp(0.8rem, 2.3vw, 1rem);
-    text-align: center;
+    max-width: 900px;
+    line-height: 2;
     opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    animation: fadeInUp 1.5s ease 0.5s forwards;
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-#footer.visible .copyright {
+/* Core Section */
+.core {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    padding: 6rem clamp(2rem, 8vw, 8rem);
+    align-items: center;
+}
+
+.core-block {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+}
+
+.core-block.visible {
     opacity: 1;
     transform: translateY(0);
-    transition-delay: 0.5s;
+}
+
+.core-title {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 600;
+    margin-bottom: 2rem;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
+.core-text {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-weight: 300;
+    line-height: 2.2;
+    color: rgba(255, 255, 255, 0.85);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.core-text strong {
+    color: #ffffff;
+    font-weight: 500;
+}
+
+/* CTA Section */
+.cta {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.cta-message {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-weight: 300;
+    margin-bottom: 4rem;
+    line-height: 1.8;
+    max-width: 800px;
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 0.3s;
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.app-store-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 3rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    font-weight: 500;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 0.6s;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.app-store-button:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.app-store-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.copyright {
+    margin-top: 4rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 0.9s;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .core {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 4rem 2rem;
+    }
+
+    .hero-title {
+        font-size: clamp(3rem, 15vw, 6rem);
+    }
+
+    .core-title {
+        font-size: clamp(1.8rem, 8vw, 3rem);
+    }
+
+    .app-store-button {
+        padding: 1.2rem 2rem;
+        font-size: 1rem;
+    }
 }
 
 /* Scroll indicator */
 .scroll-indicator {
     position: absolute;
-    bottom: clamp(1.5rem, 4vh, 2rem);
+    bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
-    animation: bounce 2s infinite;
-    transition: opacity 0.5s ease;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateX(-50%) translateY(0);
-    }
-    40% {
-        transform: translateX(-50%) translateY(-10px);
-    }
-    60% {
-        transform: translateX(-50%) translateY(-5px);
-    }
+    width: 24px;
+    height: 40px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    opacity: 0;
+    animation: fadeIn 1s ease 2s forwards;
 }
 
 .scroll-indicator::after {
-    content: '↓';
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    color: rgba(255, 255, 255, 0.5);
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 2px;
+    animation: scroll 2s ease infinite;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .section {
-        padding: clamp(2rem, 6vh, 4rem) clamp(1.2rem, 5vw, 2rem);
-    }
-
-    .content {
-        max-width: 92vw;
-    }
-
-    #hero h1 {
-        font-size: clamp(3rem, 13vw, 5rem);
-        font-weight: 700;
-    }
-
-    #hero .subtitle {
-        font-size: clamp(1.3rem, 5.5vw, 2rem);
-        line-height: 1.7;
-        font-weight: 500;
-    }
-
-    #hero .tagline {
-        font-size: clamp(1.2rem, 5vw, 1.8rem);
-        line-height: 1.85;
-        max-width: 95%;
-        font-weight: 400;
-    }
-
-    .line {
-        max-width: 95%;
-        font-size: clamp(1.07rem, 3.87vw, 1.87rem);
-        line-height: 1.85;
-        text-align: center;
-        margin-left: auto;
-        margin-right: auto;
-        font-weight: 500;
-    }
-
-    .line.large,
-    .line.medium,
-    .line.small,
-    .line.emphasis {
-        max-width: 95%;
-        text-align: center;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    #footer .button-label {
-        font-size: clamp(0.7rem, 2vw, 0.85rem);
-    }
-
-    #footer .button-title {
-        font-size: clamp(1.2rem, 4vw, 1.8rem);
-    }
-
-    /* 모바일에서 파동 원 크기 제한 */
-    @keyframes changeExpand {
-        0% {
-            width: 10px;
-            height: 10px;
-            opacity: 0;
-            border-width: 2px;
-        }
-        30% {
-            opacity: 0.7;
-        }
-        70% {
-            opacity: 0.4;
-        }
-        100% {
-            width: 33vw;
-            height: 33vw;
-            opacity: 0;
-            border-width: 0.5px;
-        }
-    }
+@keyframes fadeIn {
+    to { opacity: 1; }
 }
 
-@media (min-width: 1920px) {
-    .content {
-        max-width: 1000px;
-    }
+@keyframes scroll {
+    0%, 100% { transform: translate(-50%, 0); opacity: 1; }
+    50% { transform: translate(-50%, 12px); opacity: 0.3; }
+}
 
-    #hero h1 {
-        font-size: 7.5rem;
-        font-weight: 700;
-    }
+/* Underwater light rays */
+.light-rays {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
 
-    .line {
-        font-size: 3rem;
-        line-height: 2;
-        font-weight: 500;
+.light-ray {
+    position: absolute;
+    top: 0;
+    left: 33.33%;
+    width: 28px;
+    height: 90vh;
+    background: linear-gradient(to bottom,
+        rgba(129, 212, 250, 0.7) 0%,
+        rgba(79, 195, 247, 0.5) 25%,
+        rgba(77, 208, 225, 0.35) 50%,
+        rgba(38, 198, 218, 0.2) 75%,
+        rgba(26, 198, 218, 0.1) 90%,
+        transparent 100%);
+    filter: blur(8px);
+    transform-origin: top center;
+}
+
+/* Concentrated light source glow */
+.light-source-glow {
+    position: absolute;
+    top: -30px;
+    left: 33.33%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle at center,
+        rgba(129, 212, 250, 0.9) 0%,
+        rgba(79, 195, 247, 0.7) 15%,
+        rgba(77, 208, 225, 0.5) 30%,
+        rgba(38, 198, 218, 0.3) 50%,
+        transparent 70%);
+    border-radius: 50%;
+    filter: blur(25px);
+    pointer-events: none;
+    z-index: 1;
+    animation: sourceGlow 5s ease-in-out infinite;
+}
+
+@keyframes sourceGlow {
+    0%, 100% {
+        opacity: 0.7;
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        opacity: 0.95;
+        transform: translateX(-50%) scale(1.15);
     }
 }
 
-@media (max-height: 700px) and (orientation: landscape) {
-    .section {
-        min-height: 120vh;
-        padding: clamp(2rem, 4vh, 3rem) clamp(1.5rem, 5vw, 2.5rem);
+@keyframes raySwim {
+    0%, 100% {
+        opacity: 0.5;
+        transform: rotate(var(--ray-angle)) translateY(0) scaleY(1) skewX(0deg);
+    }
+    33% {
+        opacity: 0.75;
+        transform: rotate(var(--ray-angle)) translateY(30px) scaleY(1.1) skewX(1deg);
+    }
+    66% {
+        opacity: 0.85;
+        transform: rotate(var(--ray-angle)) translateY(60px) scaleY(1.15) skewX(-1deg);
     }
 }
 
-@media (min-width: 2560px) {
-    .content {
-        max-width: 1200px;
-    }
+/* Gentle floating particles */
+.water-particles {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
 }
 
-@media (max-width: 375px) {
-    .section {
-        padding: clamp(1.5rem, 5vh, 3rem) clamp(1rem, 4vw, 1.5rem);
-    }
-
-    .content {
-        max-width: 95vw;
-    }
+.water-particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: rgba(179, 229, 252, 0.5);
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(129, 212, 250, 0.6);
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    #hero h1,
-    #manifesto .line {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+@keyframes particleFloat {
+    0% {
+        transform: translate(0, 0);
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(var(--float-x), var(--float-y));
+        opacity: 0.4;
     }
 }
