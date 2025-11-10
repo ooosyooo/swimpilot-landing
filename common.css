@@ -8,19 +8,33 @@
 
 html {
     scroll-behavior: smooth;
+    /* Prevent overscroll bounce on iOS */
+    overscroll-behavior: none;
+    /* Fix iOS Safari viewport height issue */
+    height: 100%;
 }
 
 body {
     font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     background: linear-gradient(to bottom, #05445e 0%, #189ab4 40%, #75e6da 70%, #189ab4 100%);
+    /* Make background fixed to prevent white space on overscroll */
+    background-attachment: fixed;
     color: #ffffff;
     overflow-x: hidden;
+    /* Prevent overscroll bounce on iOS */
+    overscroll-behavior-y: none;
     line-height: 1.8;
+    /* Fix iOS Safari viewport height issue */
+    min-height: 100%;
+    /* Prevent horizontal scrolling caused by animations */
+    position: relative;
 }
 
 /* Hero Section */
 .hero {
     min-height: 100vh;
+    /* Use dvh for mobile browsers that support it, fallback to 100vh */
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -65,6 +79,8 @@ body {
 /* Core Section */
 .core {
     min-height: 100vh;
+    /* Use dvh for mobile browsers that support it, fallback to 100vh */
+    min-height: 100dvh;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
@@ -109,6 +125,8 @@ body {
 /* CTA Section */
 .cta {
     min-height: 100vh;
+    /* Use dvh for mobile browsers that support it, fallback to 100vh */
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -239,6 +257,38 @@ body {
         padding: 1.2rem 2rem;
         font-size: 1rem;
     }
+
+    /* Reduce animation intensity on mobile for better performance */
+    .light-ray {
+        height: 60vh;
+    }
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .app-store-button:hover {
+        background: linear-gradient(135deg, rgba(129, 212, 250, 0.25) 0%, rgba(77, 208, 225, 0.3) 50%, rgba(38, 198, 218, 0.25) 100%);
+        border-color: rgba(255, 255, 255, 0.4);
+        transform: none;
+        box-shadow: 0 8px 32px rgba(77, 208, 225, 0.2),
+                    0 4px 16px rgba(0, 0, 0, 0.2),
+                    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    }
+
+    .app-store-button:hover::before {
+        left: -100%;
+    }
+
+    .app-store-button:hover .app-store-icon {
+        transform: none;
+    }
+
+    /* Active state for touch feedback */
+    .app-store-button:active {
+        background: linear-gradient(135deg, rgba(129, 212, 250, 0.35) 0%, rgba(77, 208, 225, 0.4) 50%, rgba(38, 198, 218, 0.35) 100%);
+        border-color: rgba(255, 255, 255, 0.6);
+        transform: scale(0.98);
+    }
 }
 
 /* Scroll indicator */
@@ -287,6 +337,10 @@ body {
     pointer-events: none;
     z-index: 0;
     overflow: hidden;
+    /* Optimize for mobile performance */
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .light-ray {
@@ -362,6 +416,10 @@ body {
     left: 0;
     pointer-events: none;
     z-index: 1;
+    /* Optimize for mobile performance */
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .water-particle {

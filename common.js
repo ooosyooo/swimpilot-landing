@@ -1,5 +1,16 @@
 // SwimPilot Common JavaScript - 3 Section Design
 
+// Detect mobile devices
+const isMobile = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+        || window.innerWidth <= 768;
+};
+
+// Detect if device prefers reduced motion
+const prefersReducedMotion = () => {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+};
+
 // Intersection Observer for core blocks
 const coreBlocks = document.querySelectorAll('.core-block');
 const observer = new IntersectionObserver((entries) => {
@@ -14,6 +25,9 @@ coreBlocks.forEach(block => observer.observe(block));
 
 // Create underwater light rays (radiating from top right 1/3 point)
 function createLightRays() {
+    // Skip animations if user prefers reduced motion
+    if (prefersReducedMotion()) return;
+
     const container = document.createElement('div');
     container.className = 'light-rays';
 
@@ -22,7 +36,8 @@ function createLightRays() {
     sourceGlow.className = 'light-source-glow';
     container.appendChild(sourceGlow);
 
-    const rayCount = 24;
+    // Reduce ray count on mobile for better performance
+    const rayCount = isMobile() ? 12 : 24;
     const spreadAngle = 100; // Total spread angle in degrees
     const spreadRadius = 40; // Smaller radius for tighter clustering
 
@@ -58,10 +73,14 @@ function createLightRays() {
 
 // Create floating particles
 function createWaterParticles() {
+    // Skip animations if user prefers reduced motion
+    if (prefersReducedMotion()) return;
+
     const container = document.createElement('div');
     container.className = 'water-particles';
 
-    const particleCount = 40;
+    // Reduce particle count on mobile for better performance
+    const particleCount = isMobile() ? 20 : 40;
     for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.className = 'water-particle';
