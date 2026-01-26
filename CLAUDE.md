@@ -15,7 +15,7 @@ All code, files, and commits should appear as human-written without any AI-relat
 
 ## Project Overview
 
-**SwimPilot Landing Page** - A multilingual static website for the SwimPilot swimming app. This is a pure HTML/CSS/JavaScript project with no build system or framework dependencies.
+**EopuEopu Landing Page** - A multilingual static website for the EopuEopu swimming app. This is a pure HTML/CSS/JavaScript project with no build system or framework dependencies.
 
 ## Project Structure
 
@@ -94,7 +94,7 @@ Animation creation happens in the JavaScript section:
 ### App Store Link
 Update the App Store URL in the footer `<a href>` tag:
 ```html
-<a href="https://apps.apple.com/app/swimpilot" class="app-store-button" target="_blank">
+<a href="https://apps.apple.com/app/eopueopu" class="app-store-button" target="_blank">
 ```
 
 ## Deployment

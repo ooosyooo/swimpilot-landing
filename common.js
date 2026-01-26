@@ -1,4 +1,4 @@
-// SwimPilot Common JavaScript - 3 Section Design
+// EopuEopu Common JavaScript - 3 Section Design
 
 // Detect mobile devices
 const isMobile = () => {
