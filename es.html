@@ -3,71 +3,1314 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EopuEopu — El Camino a la Profundidad</title>
+    <title>EopuEopu — Rastreador de natación para Apple Watch</title>
+    <meta name="description" content="Registra tu natación de forma inteligente con Apple Watch. Detección automática de largos, seguimiento en tiempo real y análisis de sesiones.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Common Styles -->
-    <link rel="stylesheet" href="common.css">
+    <style>
+        /* ===== Reset & Base ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overscroll-behavior: none;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a1628;
+            color: #ffffff;
+            overflow-x: hidden;
+            overscroll-behavior-y: none;
+            line-height: 1.7;
+            min-height: 100%;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== Background ===== */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                180deg,
+                #0a1628 0%,
+                #0d2137 20%,
+                #0f3460 40%,
+                #16536e 60%,
+                #1a6e7a 80%,
+                #0f3460 100%
+            );
+            z-index: 0;
+        }
+
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .bg-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(100, 200, 255, 0.4);
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(100, 200, 255, 0.3);
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translate(0, 0); opacity: 0.3; }
+            50% { opacity: 0.7; }
+            100% { transform: translate(var(--fx), var(--fy)); opacity: 0.3; }
+        }
+
+        /* ===== Shared ===== */
+        .section {
+            position: relative;
+            z-index: 2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 clamp(1.5rem, 5vw, 4rem);
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #4dd0e1;
+            background: rgba(77, 208, 225, 0.1);
+            border: 1px solid rgba(77, 208, 225, 0.25);
+            border-radius: 100px;
+            padding: 0.4rem 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4.5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-desc {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            max-width: 560px;
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        /* ===== 1. Hero Section ===== */
+        .hero {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            padding: clamp(6rem, 12vh, 10rem) 0 clamp(4rem, 8vh, 8rem);
+        }
+
+        .hero .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(2rem, 5vw, 4rem);
+            align-items: center;
+        }
+
+        .hero-content {
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.2s forwards;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #4dd0e1;
+            background: rgba(77, 208, 225, 0.1);
+            border: 1px solid rgba(77, 208, 225, 0.2);
+            border-radius: 100px;
+            padding: 0.45rem 1rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            background: #4dd0e1;
+            border-radius: 50%;
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4.2rem);
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title .highlight {
+            background: linear-gradient(135deg, #4dd0e1, #26c6da, #00bcd4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-desc {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            max-width: 480px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #4dd0e1, #00bcd4);
+            color: #0a1628;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(77, 208, 225, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(77, 208, 225, 0.45);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.8rem;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.14);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.5s forwards;
+        }
+
+        .hero-mockup {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-visual .device-watch.size-hero {
+            width: 220px;
+        }
+
+        .mockup-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(77, 208, 225, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* ===== 2. Features Section ===== */
+        .features {
+            padding: clamp(5rem, 10vh, 8rem) 0;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: clamp(3rem, 6vw, 5rem);
+        }
+
+        .features-header .section-desc {
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(1.2rem, 2.5vw, 2rem);
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: clamp(1.8rem, 3vw, 2.5rem);
+            transition: all 0.4s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(77, 208, 225, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(77, 208, 225, 0.1);
+            border: 1px solid rgba(77, 208, 225, 0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-icon svg {
+            width: 28px;
+            height: 28px;
+            color: #4dd0e1;
+        }
+
+        .feature-title {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .feature-desc {
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+        }
+
+        /* ===== 3. How It Works ===== */
+        .how-it-works {
+            padding: clamp(5rem, 10vh, 8rem) 0;
+        }
+
+        .how-it-works-header {
+            text-align: center;
+            margin-bottom: clamp(3rem, 6vw, 5rem);
+        }
+
+        .how-it-works-header .section-desc {
+            margin: 0 auto;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(1.5rem, 3vw, 3rem);
+            position: relative;
+        }
+
+        /* Connector line between steps */
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 44px;
+            left: calc(16.66% + 28px);
+            right: calc(16.66% + 28px);
+            height: 2px;
+            background: linear-gradient(90deg, rgba(77, 208, 225, 0.3), rgba(77, 208, 225, 0.15), rgba(77, 208, 225, 0.3));
+            z-index: 0;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #4dd0e1, #00bcd4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #0a1628;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 4px 20px rgba(77, 208, 225, 0.3);
+        }
+
+        .step-visual {
+            width: 100%;
+            aspect-ratio: 3/4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transform: scale(0.6);
+            opacity: 0;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+        }
+
+        .step.visible .step-visual {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .step.visible.reveal-delay-1 .step-visual { transition-delay: 0.1s; }
+        .step.visible.reveal-delay-2 .step-visual { transition-delay: 0.2s; }
+        .step.visible.reveal-delay-3 .step-visual { transition-delay: 0.3s; }
+
+        .step-title {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+        }
+
+        .step-desc {
+            font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+        }
+
+        /* ===== 4. Detail Features ===== */
+        .detail-features {
+            padding: clamp(5rem, 10vh, 8rem) 0;
+        }
+
+        .detail-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(3rem, 6vw, 6rem);
+            align-items: center;
+            margin-bottom: clamp(4rem, 8vh, 7rem);
+        }
+
+        .detail-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-row.reverse {
+            direction: rtl;
+        }
+
+        .detail-row.reverse > * {
+            direction: ltr;
+        }
+
+        .detail-visual {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .detail-content .section-desc {
+            margin-bottom: 2rem;
+        }
+
+        .detail-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .detail-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .detail-list li svg {
+            width: 20px;
+            height: 20px;
+            color: #4dd0e1;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* ===== 5. Stats Bar ===== */
+        .stats-bar {
+            padding: clamp(3rem, 6vh, 5rem) 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: clamp(2rem, 4vw, 3rem);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            color: #4dd0e1;
+            line-height: 1.2;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-label {
+            font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ===== 6. CTA Section ===== */
+        .cta-section {
+            padding: clamp(5rem, 10vh, 8rem) 0 clamp(3rem, 6vh, 5rem);
+        }
+
+        .cta-box {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(77, 208, 225, 0.08), rgba(0, 188, 212, 0.04));
+            border: 1px solid rgba(77, 208, 225, 0.15);
+            border-radius: 28px;
+            padding: clamp(3rem, 6vw, 5rem);
+        }
+
+        .cta-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .cta-desc {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: rgba(255, 255, 255, 0.65);
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .cta-platforms {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-platform {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .cta-platform svg {
+            width: 18px;
+            height: 18px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* ===== 7. Footer ===== */
+        .footer {
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-text {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        /* ===== Device Frames ===== */
+
+        /* -- Watch Frame -- */
+        .device-watch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .device-watch .device-body {
+            background: linear-gradient(145deg, #2a2a2e, #1a1a1e);
+            border-radius: 28%;
+            padding: 8%;
+            position: relative;
+            box-shadow:
+                0 12px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 1px rgba(255, 255, 255, 0.08);
+        }
+
+        .device-watch .device-crown {
+            position: absolute;
+            right: -6%;
+            top: 38%;
+            width: 5%;
+            height: 16%;
+            background: linear-gradient(145deg, #3a3a3e, #222226);
+            border-radius: 0 3px 3px 0;
+            box-shadow: 1px 0 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .device-watch .device-btn {
+            position: absolute;
+            right: -5%;
+            top: 60%;
+            width: 4%;
+            height: 8%;
+            background: linear-gradient(145deg, #3a3a3e, #222226);
+            border-radius: 0 2px 2px 0;
+        }
+
+        .device-watch .device-screen {
+            border-radius: 22%;
+            overflow: hidden;
+            background: #000;
+            line-height: 0;
+        }
+
+        .device-watch .device-screen img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Watch sizes */
+        .device-watch.size-hero { width: 200px; }
+        .device-watch.size-step { width: 120px; }
+
+        /* -- iPhone Frame -- */
+        .device-iphone {
+            position: relative;
+            display: inline-block;
+        }
+
+        .device-iphone .device-body {
+            background: linear-gradient(145deg, #2a2a2e, #1a1a1e);
+            border-radius: 12% / 5.8%;
+            padding: 3%;
+            position: relative;
+            box-shadow:
+                0 16px 48px rgba(0, 0, 0, 0.5),
+                inset 0 1px 1px rgba(255, 255, 255, 0.08);
+        }
+
+        .device-iphone .device-body::before {
+            content: '';
+            position: absolute;
+            top: 1%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 28%;
+            height: 1.2%;
+            background: #1a1a1e;
+            border-radius: 20px;
+            z-index: 2;
+        }
+
+        .device-iphone .device-screen {
+            border-radius: 10% / 4.8%;
+            overflow: hidden;
+            background: #000;
+            line-height: 0;
+        }
+
+        .device-iphone .device-screen img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* iPhone sizes */
+        .device-iphone.size-step { width: 130px; }
+        .device-iphone.size-detail { width: 260px; }
+
+        /* ===== Animations ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .watch-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content {
+                order: 1;
+            }
+
+            .hero-visual {
+                order: 0;
+                margin-bottom: 1rem;
+            }
+
+            .hero-desc {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-mockup {
+                max-width: 240px;
+            }
+
+            .hero-visual .device-watch.size-hero {
+                width: 160px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .feature-card {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                grid-template-rows: auto auto;
+                column-gap: 1.2rem;
+                row-gap: 0.3rem;
+                padding: 1.5rem;
+            }
+
+            .feature-icon {
+                grid-row: 1 / 3;
+                margin-bottom: 0;
+                width: 48px;
+                height: 48px;
+            }
+
+            .feature-title {
+                align-self: end;
+                margin-bottom: 0;
+            }
+
+            .feature-desc {
+                grid-column: 2;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .steps::before {
+                display: none;
+            }
+
+            .step {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .step-number {
+                width: 36px;
+                height: 36px;
+                font-size: 0.95rem;
+                margin: 0 auto 0.8rem;
+            }
+
+            .step-visual {
+                width: auto;
+                aspect-ratio: unset;
+                margin-bottom: 0.8rem;
+            }
+
+            .device-watch.size-step {
+                width: 140px;
+            }
+
+            .device-iphone.size-step {
+                width: 150px;
+            }
+
+            .step-title {
+                margin-bottom: 0.3rem;
+            }
+
+            .step-desc {
+            }
+
+            .detail-row,
+            .detail-row.reverse {
+                grid-template-columns: 1fr;
+                direction: ltr;
+                gap: 2rem;
+                padding-bottom: 3.5rem;
+                margin-bottom: 3.5rem;
+                border-bottom: 1px solid rgba(77, 208, 225, 0.15);
+            }
+
+            .detail-row:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+                margin-bottom: 0;
+            }
+
+            .detail-visual {
+                max-width: 240px;
+            }
+
+            .device-iphone.size-detail {
+                width: 200px;
+            }
+
+            .detail-content {
+                text-align: center;
+            }
+
+            .detail-content .section-desc {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .cta-box {
+                padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
+            }
+
+            .cta-box .btn-primary {
+                width: auto;
+            }
+
+            .cta-platforms {
+                flex-direction: column;
+                gap: 0.6rem;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .cta-box .btn-primary {
+                width: 100%;
+            }
+        }
+
+        /* Disable hover on touch */
+        @media (hover: none) and (pointer: coarse) {
+            .feature-card:hover {
+                transform: none;
+                background: rgba(255, 255, 255, 0.04);
+                border-color: rgba(255, 255, 255, 0.08);
+                box-shadow: none;
+            }
+
+            .btn-primary:hover {
+                transform: none;
+                box-shadow: 0 4px 20px rgba(77, 208, 225, 0.3);
+            }
+
+            .btn-primary:active {
+                transform: scale(0.97);
+            }
+
+            .btn-secondary:hover {
+                background: rgba(255, 255, 255, 0.08);
+                border-color: rgba(255, 255, 255, 0.15);
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .watch-float {
+                animation: none;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1 class="hero-title">EopuEopu</h1>
-        <p class="hero-subtitle">
-            Podrías haber volado por el cielo<br>
-            o corrido por la tierra<br><br>
-            Pero elegiste<br>
-            el camino a la profundidad
-        </p>
-        <div class="scroll-indicator"></div>
-    </section>
+    <!-- Background -->
+    <div class="bg-gradient"></div>
+    <div class="bg-particles" id="particles"></div>
 
-    <!-- Core Section -->
-    <section class="core">
-        <div class="core-block">
-            <h2 class="core-title">En Silencio</h2>
-            <p class="core-text">
-                La superficie está llena de ruido<br>
-                pero el agua enseña silencio<br><br>
-                Las preocupaciones de ayer<br>
-                las ansiedades de mañana<br>
-                todo dejado en la superficie<br><br>
-                Tú <strong>desciendes a la profundidad</strong>
-            </p>
+    <!-- ==================== 1. HERO ==================== -->
+    <section class="hero section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    App de natación para Apple Watch
+                </div>
+                <h1 class="hero-title">
+                    Registra tu natación<br>
+                    de forma <span class="highlight">inteligente</span>
+                </h1>
+                <p class="hero-desc">
+                    Totalmente compatible con los registros de natación de Apple Fitness. Sincroniza automáticamente tus datos, analiza cada sesión y acompaña tu progreso.
+                </p>
+                <div class="hero-actions">
+                    <a href="https://apps.apple.com/app/id6752946670" class="btn-primary" target="_blank">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                        </svg>
+                        Descargar en App Store
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-mockup watch-float">
+                    <div class="mockup-glow"></div>
+                    <div class="device-watch size-hero">
+                        <div class="device-body">
+                            <div class="device-crown"></div>
+                            <div class="device-btn"></div>
+                            <div class="device-screen">
+                                <img src="img/es/watch-session.png" alt="Pantalla de sesión de natación de EopuEopu en Apple Watch">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="core-block">
-            <h2 class="core-title">Porque No Es Perfecto</h2>
-            <p class="core-text">
-                Silenciosamente grabado en tu muñeca<br>
-                Una pared, incontables respiraciones, quietud infinita<br><br>
-                Mil vueltas<br>
-                y la perfección nunca llega<br><br>
-                Por eso <strong>volvemos al agua</strong>
-            </p>
+    <!-- ==================== 2. FEATURES ==================== -->
+    <section class="features section" id="features">
+        <div class="container">
+            <div class="features-header reveal">
+                <span class="section-label">Funciones clave</span>
+                <h2 class="section-title">Solo concéntrate en nadar<br>EopuEopu se encarga del resto</h2>
+                <p class="section-desc">
+                    Sin configuraciones complicadas. Solo ponte el reloj y entra al agua.
+                </p>
+            </div>
+            <div class="features-grid">
+                <!-- Feature 1: Apple Fitness Compatibility -->
+                <div class="feature-card reveal reveal-delay-1">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a10 10 0 1 0 10 10H12V2z"/>
+                            <path d="M12 2a10 10 0 0 1 10 10"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Compatible con Apple Fitness</h3>
+                    <p class="feature-desc">
+                        Totalmente compatible con los registros de natación de Apple Fitness. Aprovecha al máximo tus datos existentes.
+                    </p>
+                </div>
+                <!-- Feature 2: Real-time on Wrist -->
+                <div class="feature-card reveal reveal-delay-2">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Registro en tiempo real en tu muñeca</h3>
+                    <p class="feature-desc">
+                        Consulta largos, distancia, tiempo y frecuencia cardíaca directamente en tu muñeca mientras nadas.
+                    </p>
+                </div>
+                <!-- Feature 3: Session Analysis -->
+                <div class="feature-card reveal reveal-delay-3">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"/>
+                            <line x1="12" y1="20" x2="12" y2="4"/>
+                            <line x1="6" y1="20" x2="6" y2="14"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Análisis de sesiones</h3>
+                    <p class="feature-desc">
+                        Análisis detallado largo por largo de cada sesión. Visualiza tus patrones y tendencias de crecimiento.
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta">
-        <p class="cta-message">
-            Mil respiraciones<br>
-            Una transformación
-        </p>
-        <a href="https://apps.apple.com/app/id6752946670" class="app-store-button" target="_blank">
-            <svg class="app-store-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" fill="currentColor"/>
-            </svg>
-            Comenzar EopuEopu
-        </a>
-        <p class="copyright">© 2025 EopuEopu. All rights reserved.</p>
+    <!-- ==================== 3. HOW IT WORKS ==================== -->
+    <section class="how-it-works section">
+        <div class="container">
+            <div class="how-it-works-header reveal">
+                <span class="section-label">Cómo funciona</span>
+                <h2 class="section-title">Solo 3 pasos</h2>
+                <p class="section-desc">
+                    Sin configuraciones complicadas. Solo 10 segundos para empezar.
+                </p>
+            </div>
+            <div class="steps">
+                <!-- Step 1 -->
+                <div class="step reveal reveal-delay-1">
+                    <div class="step-number">1</div>
+                    <div class="step-visual">
+                        <div class="device-watch size-step">
+                            <div class="device-body">
+                                <div class="device-crown"></div>
+                                <div class="device-btn"></div>
+                                <div class="device-screen">
+                                    <img src="img/es/watch-start.png" alt="Pantalla de inicio de EopuEopu">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="step-title">Empieza a nadar</h3>
+                    <p class="step-desc">Inicia con la app EopuEopu Watch o la app de natación de Apple, cualquiera funciona.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="step reveal reveal-delay-2">
+                    <div class="step-number">2</div>
+                    <div class="step-visual">
+                        <div class="device-watch size-step">
+                            <div class="device-body">
+                                <div class="device-crown"></div>
+                                <div class="device-btn"></div>
+                                <div class="device-screen">
+                                    <img src="img/es/watch-session.png" alt="Registro en tiempo real durante la natación">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="step-title">Concéntrate en nadar</h3>
+                    <p class="step-desc">Se sincroniza automáticamente con Apple Fitness para registrar tus datos de natación.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="step reveal reveal-delay-3">
+                    <div class="step-number">3</div>
+                    <div class="step-visual">
+                        <div class="device-iphone size-step">
+                            <div class="device-body">
+                                <div class="device-screen">
+                                    <img src="img/es/ios-detail.png" alt="Análisis detallado de la sesión">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="step-title">Revisa tus registros</h3>
+                    <p class="step-desc">Consulta análisis detallados por largo y tendencias de crecimiento en tu iPhone.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Common Scripts -->
-    <script src="common.js"></script>
+    <!-- ==================== 4. DETAIL FEATURES ==================== -->
+    <section class="detail-features section">
+        <div class="container">
+            <!-- Detail 1: Apple Fitness Sync -->
+            <div class="detail-row reveal">
+                <div class="detail-visual">
+                    <div class="device-iphone size-detail">
+                        <div class="device-body">
+                            <div class="device-screen">
+                                <img src="img/es/ios-home.png" alt="Pantalla principal de EopuEopu en iPhone">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-content">
+                    <span class="section-label">Compatibilidad perfecta</span>
+                    <h2 class="section-title">Sincronización perfecta<br>con Apple Fitness</h2>
+                    <p class="section-desc">
+                        Importa directamente los registros de la app de natación de Apple. Ya sea que inicies con EopuEopu Watch o con la app de natación de Apple, todos los datos se conectan automáticamente.
+                    </p>
+                    <ul class="detail-list">
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            App EopuEopu — Inicia la natación con la app dedicada para Watch
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            App de natación Apple — Usa tus hábitos existentes
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Sincronización automática — Un solo registro, sin importar la app
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Detail 2: Growth System -->
+            <div class="detail-row reverse reveal">
+                <div class="detail-visual">
+                    <div class="device-iphone size-detail">
+                        <div class="device-body">
+                            <div class="device-screen">
+                                <img src="img/es/ios-insights.png" alt="Pantalla de análisis e insights de EopuEopu">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-content">
+                    <span class="section-label">Sistema de crecimiento</span>
+                    <h2 class="section-title">Cuanto más nadas,<br>más profundos tus registros</h2>
+                    <p class="section-desc">
+                        Experimenta tu crecimiento en natación con un sistema de 13 niveles de profundidad. Comienza desde Nereida y forja tu propia profundidad.
+                    </p>
+                    <ul class="detail-list">
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            13 niveles — Tu propio viaje de crecimiento
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Análisis por largo — Revisa cada registro
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Seguimiento de tendencias — Visualiza cambios a largo plazo
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 5. STATS ==================== -->
+    <section class="stats-bar section">
+        <div class="container">
+            <div class="stats-grid reveal">
+                <div class="stat-item">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Compatible con Apple Fitness</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">Tiempo real</div>
+                    <div class="stat-label">Sincronización Watch ↔ iPhone</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">Gratis</div>
+                    <div class="stat-label">Descarga</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 6. CTA ==================== -->
+    <section class="cta-section section">
+        <div class="container">
+            <div class="cta-box reveal">
+                <h2 class="cta-title">Empieza a registrar<br>tu natación hoy</h2>
+                <p class="cta-desc">
+                    Solo ponte tu Apple Watch y entra al agua.<br>
+                    EopuEopu se encarga del resto.
+                </p>
+                <a href="https://apps.apple.com/app/id6752946670" class="btn-primary" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                        <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                    </svg>
+                    Descarga gratuita en App Store
+                </a>
+                <div class="cta-platforms">
+                    <span class="cta-platform">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="5" y="2" width="14" height="20" rx="3"/>
+                            <line x1="12" y1="18" x2="12" y2="18.01"/>
+                        </svg>
+                        Compatible con iPhone
+                    </span>
+                    <span class="cta-platform">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        Compatible con Apple Watch
+                    </span>
+                    <span class="cta-platform">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                        iOS 17.0+
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 7. FOOTER ==================== -->
+    <footer class="footer section">
+        <p class="footer-text">&copy; 2025 EopuEopu. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- ==================== Scripts ==================== -->
+    <script>
+        // Detect mobile
+        const isMobile = () => /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth <= 768;
+        const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Scroll reveal with IntersectionObserver
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Create floating particles
+        function createParticles() {
+            if (prefersReducedMotion()) return;
+
+            const container = document.getElementById('particles');
+            const count = isMobile() ? 15 : 30;
+
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.className = 'bg-particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+
+                const fx = (Math.random() - 0.5) * 80;
+                const fy = (Math.random() - 0.5) * 80;
+                p.style.setProperty('--fx', fx + 'px');
+                p.style.setProperty('--fy', fy + 'px');
+
+                const duration = 8 + Math.random() * 8;
+                const delay = -Math.random() * 8;
+                p.style.animation = `particleFloat ${duration}s ease-in-out ${delay}s infinite alternate`;
+
+                container.appendChild(p);
+            }
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Init
+        document.addEventListener('DOMContentLoaded', createParticles);
+    </script>
 </body>
 </html>

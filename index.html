@@ -1,61 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EopuEopu</title>
     <script>
-        // 브라우저 언어 감지 및 리다이렉트
         function redirectToLanguage() {
-            // 브라우저 언어 가져오기
             const userLang = navigator.language || navigator.userLanguage;
-
-            // 언어 코드 추출 (예: "ko-KR" -> "ko", "en-US" -> "en", "zh-CN" -> "zh")
             const fullLang = userLang.toLowerCase();
             const langCode = fullLang.split('-')[0];
 
-            // 지원하는 언어 목록 (10개 언어)
             const supportedLanguages = {
-                'en': 'en',           // English
-                'ko': 'ko',           // Korean
-                'ja': 'ja',           // Japanese
-                'zh': 'zh-Hans',      // Chinese (기본값: 간체)
-                'zh-cn': 'zh-Hans',   // Simplified Chinese
-                'zh-hans': 'zh-Hans', // Simplified Chinese
-                'zh-sg': 'zh-Hans',   // Singapore Chinese
-                'zh-tw': 'zh-Hant',   // Traditional Chinese
-                'zh-hk': 'zh-Hant',   // Hong Kong Chinese
-                'zh-mo': 'zh-Hant',   // Macau Chinese
-                'zh-hant': 'zh-Hant', // Traditional Chinese
-                'es': 'es',           // Spanish
-                'fr': 'fr',           // French
-                'de': 'de',           // German
-                'ru': 'ru',           // Russian
-                'pt': 'pt'            // Portuguese
+                'en': 'en',
+                'ko': 'ko',
+                'ja': 'ja',
+                'zh': 'zh-Hans',
+                'zh-cn': 'zh-Hans',
+                'zh-hans': 'zh-Hans',
+                'zh-sg': 'zh-Hans',
+                'zh-tw': 'zh-Hant',
+                'zh-hk': 'zh-Hant',
+                'zh-mo': 'zh-Hant',
+                'zh-hant': 'zh-Hant',
+                'es': 'es',
+                'fr': 'fr',
+                'de': 'de',
+                'ru': 'ru',
+                'pt': 'pt',
+                'pt-br': 'pt'
             };
 
-            // 기본 언어는 영어
             let targetLang = 'en';
 
-            // 전체 언어 코드 매칭 시도 (예: zh-CN, zh-TW)
             if (supportedLanguages[fullLang]) {
                 targetLang = supportedLanguages[fullLang];
-            }
-            // 언어 코드만으로 매칭 시도
-            else if (supportedLanguages[langCode]) {
+            } else if (supportedLanguages[langCode]) {
                 targetLang = supportedLanguages[langCode];
             }
 
-            // 해당 언어 페이지로 리다이렉트
-            window.location.href = `./${targetLang}.html`;
+            window.location.href = './' + targetLang + '.html';
         }
 
-        // 페이지 로드 시 즉시 리다이렉트
         redirectToLanguage();
     </script>
 </head>
-<body>
-    <p style="text-align: center; margin-top: 50px; font-family: sans-serif; color: #666;">
+<body style="margin:0; background:#0a1628; min-height:100vh; display:flex; align-items:center; justify-content:center;">
+    <p style="font-family:-apple-system,BlinkMacSystemFont,sans-serif; color:rgba(255,255,255,0.4); font-size:0.9rem;">
         Redirecting...
     </p>
 </body>
