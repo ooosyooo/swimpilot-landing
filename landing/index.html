@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EopuEopu</title>
+    <script>
+        function redirectToLanguage() {
+            const userLang = navigator.language || navigator.userLanguage;
+            const fullLang = userLang.toLowerCase();
+            const langCode = fullLang.split('-')[0];
+
+            const supportedLanguages = {
+                'en': 'en',
+                'ko': 'ko',
+                'ja': 'ja',
+                'zh': 'zh-Hans',
+                'zh-cn': 'zh-Hans',
+                'zh-hans': 'zh-Hans',
+                'zh-sg': 'zh-Hans',
+                'zh-tw': 'zh-Hant',
+                'zh-hk': 'zh-Hant',
+                'zh-mo': 'zh-Hant',
+                'zh-hant': 'zh-Hant',
+                'es': 'es',
+                'fr': 'fr',
+                'de': 'de',
+                'ru': 'ru',
+                'pt': 'pt',
+                'pt-br': 'pt'
+            };
+
+            let targetLang = 'en';
+
+            if (supportedLanguages[fullLang]) {
+                targetLang = supportedLanguages[fullLang];
+            } else if (supportedLanguages[langCode]) {
+                targetLang = supportedLanguages[langCode];
+            }
+
+            window.location.href = './' + targetLang + '.html';
+        }
+
+        redirectToLanguage();
+    </script>
+</head>
+<body style="margin:0; background:#0a1628; min-height:100vh; display:flex; align-items:center; justify-content:center;">
+    <p style="font-family:-apple-system,BlinkMacSystemFont,sans-serif; color:rgba(255,255,255,0.4); font-size:0.9rem;">
+        Redirecting...
+    </p>
+</body>
+</html>
