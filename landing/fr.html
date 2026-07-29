@@ -282,8 +282,8 @@
             justify-content: center;
         }
 
-        .hero-visual .device-watch.size-hero {
-            width: 220px;
+        .hero-visual .device-iphone.size-hero {
+            width: 240px;
         }
 
         .mockup-glow {
@@ -432,6 +432,24 @@
         .step.visible .step-visual {
             transform: scale(1);
             opacity: 1;
+        }
+
+
+        .step-icon {
+            width: clamp(88px, 14vw, 116px);
+            aspect-ratio: 1;
+            background: rgba(77, 208, 225, 0.08);
+            border: 1px solid rgba(77, 208, 225, 0.2);
+            border-radius: 28%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-icon svg {
+            width: 48%;
+            height: 48%;
+            color: #4dd0e1;
         }
 
         .step.visible.reveal-delay-1 .step-visual { transition-delay: 0.1s; }
@@ -610,60 +628,6 @@
 
         /* ===== Device Frames ===== */
 
-        /* -- Watch Frame -- */
-        .device-watch {
-            position: relative;
-            display: inline-block;
-        }
-
-        .device-watch .device-body {
-            background: linear-gradient(145deg, #2a2a2e, #1a1a1e);
-            border-radius: 28%;
-            padding: 8%;
-            position: relative;
-            box-shadow:
-                0 12px 40px rgba(0, 0, 0, 0.5),
-                inset 0 1px 1px rgba(255, 255, 255, 0.08);
-        }
-
-        .device-watch .device-crown {
-            position: absolute;
-            right: -6%;
-            top: 38%;
-            width: 5%;
-            height: 16%;
-            background: linear-gradient(145deg, #3a3a3e, #222226);
-            border-radius: 0 3px 3px 0;
-            box-shadow: 1px 0 3px rgba(0, 0, 0, 0.3);
-        }
-
-        .device-watch .device-btn {
-            position: absolute;
-            right: -5%;
-            top: 60%;
-            width: 4%;
-            height: 8%;
-            background: linear-gradient(145deg, #3a3a3e, #222226);
-            border-radius: 0 2px 2px 0;
-        }
-
-        .device-watch .device-screen {
-            border-radius: 22%;
-            overflow: hidden;
-            background: #000;
-            line-height: 0;
-        }
-
-        .device-watch .device-screen img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* Watch sizes */
-        .device-watch.size-hero { width: 200px; }
-        .device-watch.size-step { width: 120px; }
-
         /* -- iPhone Frame -- */
         .device-iphone {
             position: relative;
@@ -707,6 +671,7 @@
         }
 
         /* iPhone sizes */
+        .device-iphone.size-hero { width: 240px; }
         .device-iphone.size-step { width: 130px; }
         .device-iphone.size-detail { width: 260px; }
 
@@ -727,7 +692,7 @@
             50% { transform: translateY(-10px); }
         }
 
-        .watch-float {
+        .device-float {
             animation: float 4s ease-in-out infinite;
         }
 
@@ -766,8 +731,8 @@
                 max-width: 240px;
             }
 
-            .hero-visual .device-watch.size-hero {
-                width: 160px;
+            .hero-visual .device-iphone.size-hero {
+                width: 190px;
             }
 
             .features-grid {
@@ -827,10 +792,6 @@
                 width: auto;
                 aspect-ratio: unset;
                 margin-bottom: 0.8rem;
-            }
-
-            .device-watch.size-step {
-                width: 140px;
             }
 
             .device-iphone.size-step {
@@ -944,7 +905,7 @@
                 transition-duration: 0.01ms !important;
             }
 
-            .watch-float {
+            .device-float {
                 animation: none;
             }
         }
@@ -961,7 +922,7 @@
             <div class="hero-content">
                 <div class="hero-badge">
                     <span class="hero-badge-dot"></span>
-                    App de natation Apple Watch
+                    Analyse de natation Apple Watch
                 </div>
                 <h1 class="hero-title">
                     Enregistrez votre natation<br>
@@ -980,14 +941,12 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="hero-mockup watch-float">
+                <div class="hero-mockup device-float">
                     <div class="mockup-glow"></div>
-                    <div class="device-watch size-hero">
+                    <div class="device-iphone size-hero">
                         <div class="device-body">
-                            <div class="device-crown"></div>
-                            <div class="device-btn"></div>
                             <div class="device-screen">
-                                <img src="img/fr/watch-session.png" alt="Écran de session de natation EopuEopu Apple Watch">
+                                <img src="img/fr/ios-insights.png" alt="Écran du coach IA de l'app EopuEopu sur iPhone">
                             </div>
                         </div>
                     </div>
@@ -1069,14 +1028,11 @@
                 <div class="step reveal reveal-delay-1">
                     <div class="step-number">1</div>
                     <div class="step-visual">
-                        <div class="device-watch size-step">
-                            <div class="device-body">
-                                <div class="device-crown"></div>
-                                <div class="device-btn"></div>
-                                <div class="device-screen">
-                                    <img src="img/fr/watch-start.png" alt="Écran de démarrage EopuEopu">
-                                </div>
-                            </div>
+                        <div class="step-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M10 8l6 4-6 4z"/>
+                            </svg>
                         </div>
                     </div>
                     <h3 class="step-title">Commencez à nager</h3>
@@ -1086,14 +1042,12 @@
                 <div class="step reveal reveal-delay-2">
                     <div class="step-number">2</div>
                     <div class="step-visual">
-                        <div class="device-watch size-step">
-                            <div class="device-body">
-                                <div class="device-crown"></div>
-                                <div class="device-btn"></div>
-                                <div class="device-screen">
-                                    <img src="img/fr/watch-session.png" alt="Suivi en temps réel pendant la nage">
-                                </div>
-                            </div>
+                        <div class="step-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 7c2 0 2 2 4 2s2-2 4-2 2 2 4 2 2-2 4-2 2 2 4 2"/>
+                                <path d="M2 12c2 0 2 2 4 2s2-2 4-2 2 2 4 2 2-2 4-2 2 2 4 2"/>
+                                <path d="M2 17c2 0 2 2 4 2s2-2 4-2 2 2 4 2 2-2 4-2 2 2 4 2"/>
+                            </svg>
                         </div>
                     </div>
                     <h3 class="step-title">Concentrez-vous sur la nage</h3>
@@ -1273,7 +1227,7 @@
                             <circle cx="12" cy="12" r="10"/>
                             <polyline points="12 6 12 12 16 14"/>
                         </svg>
-                        Apple Watch compatible
+                        Synchro Apple Watch
                     </span>
                     <span class="cta-platform">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
