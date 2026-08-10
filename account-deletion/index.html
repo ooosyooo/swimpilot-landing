@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>EopuEopu Account Deletion</title>
+    <script>
+        // 브라우저 언어 감지
+        const userLang = (navigator.language || navigator.userLanguage).toLowerCase();
+
+        // 언어별 리다이렉트
+        if (userLang.startsWith('ko')) {
+            // 한국어: ko, ko-KR
+            window.location.href = 'ko.html';
+        } else if (userLang.startsWith('ja')) {
+            // 일본어: ja, ja-JP
+            window.location.href = 'ja.html';
+        } else if (userLang === 'zh-tw' || userLang === 'zh-hk' || userLang === 'zh-mo' || userLang.startsWith('zh-hant')) {
+            // 중국어 번체: zh-TW (대만), zh-HK (홍콩), zh-MO (마카오), zh-Hant
+            window.location.href = 'zh-Hant.html';
+        } else if (userLang === 'zh-cn' || userLang === 'zh-sg' || userLang === 'zh' || userLang.startsWith('zh-hans')) {
+            // 중국어 간체: zh-CN (중국), zh-SG (싱가포르), zh (기본값), zh-Hans
+            window.location.href = 'zh-Hans.html';
+        } else if (userLang.startsWith('es')) {
+            // 스페인어: es, es-ES, es-MX, es-AR 등
+            window.location.href = 'es.html';
+        } else if (userLang.startsWith('fr')) {
+            // 프랑스어: fr, fr-FR, fr-CA 등
+            window.location.href = 'fr.html';
+        } else if (userLang.startsWith('de')) {
+            // 독일어: de, de-DE, de-AT, de-CH 등
+            window.location.href = 'de.html';
+        } else if (userLang.startsWith('pt')) {
+            // 포르투갈어: pt, pt-BR, pt-PT 등
+            window.location.href = 'pt.html';
+        } else if (userLang.startsWith('ru')) {
+            // 러시아어: ru, ru-RU 등
+            window.location.href = 'ru.html';
+        } else {
+            // 기본값: 영어 (en, en-US, en-GB 및 기타 모든 언어)
+            window.location.href = 'en.html';
+        }
+    </script>
+</head>
+<body>
+    <p>Redirecting...</p>
+</body>
+</html>
