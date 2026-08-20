@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/claude-code) when working 
 
 ## Repository Overview
 
-This is a static HTML-based multilingual terms of service website for EopuEopu, deployed via GitHub Pages at https://ooosyooo.github.io/eopueopu-terms. The site serves Apple App Store compliance requirements by providing terms of service in 10 languages.
+This is a static HTML-based multilingual terms of service website for EopuEopu, deployed via GitHub Pages at https://eopueopu.o3orbit.app/terms. The site serves Apple App Store and Google Play compliance requirements by providing terms of service in 10 languages.
 
 ## Architecture
 
@@ -17,12 +17,15 @@ This is a static HTML-based multilingual terms of service website for EopuEopu, 
 Each language file (`ko.html`, `en.html`, `ja.html`, `zh-Hans.html`, `zh-Hant.html`, `es.html`, `fr.html`, `de.html`, `pt.html`, `ru.html`) follows identical structure:
 - Sticky header with EopuEopu logo
 - Sidebar navigation with table of contents
-- Main content area with 5 sections:
-  1. Service Overview (features, premium features)
-  2. Subscription & Billing (monthly/annual subscriptions, auto-renewal)
-  3. Refund Policy (Apple App Store process)
-  4. Privacy Protection (data collection, storage, deletion)
-  5. Contact Information
+- Main content area with 8 sections:
+  1. Service Overview (generic description only — do NOT enumerate features; they change)
+  2. Subscription & Billing (monthly/annual, auto-renewal, cancellation paths for BOTH App Store and Google Play)
+  3. Refund Policy (deferred to each store's policy; Apple + Google Play links)
+  4. User Obligations (no record manipulation/ranking distortion, no account misuse, no service interference)
+  5. Disclaimers & Limitation of Liability (not a medical device; data accuracy depends on device/health platform; "as is"; liability limited to the extent permitted by law)
+  6. Changes to Service & Terms
+  7. Privacy (a single link to the Privacy Policy — do NOT duplicate privacy details here; they drift out of sync)
+  8. Contact Information
 - Responsive design with mobile breakpoint at 768px
 - Client-side smooth scrolling and active section highlighting
 
@@ -32,22 +35,23 @@ Each language file (`ko.html`, `en.html`, `ja.html`, `zh-Hans.html`, `zh-Hant.ht
 - Apple system fonts: `-apple-system, BlinkMacSystemFont, 'Segoe UI'`
 - Mobile: horizontal scrolling navigation, simplified layout
 
-## Content Requirements (App Store Compliance)
+## Content Requirements (Store Compliance)
 
 When modifying content, ensure ALL language files maintain these required sections:
-- Subscription details (monthly/annual, auto-renewal, cancellation process)
-- Refund policy with link to Apple support (https://reportaproblem.apple.com)
-- Privacy information (data collection, storage locations for free vs premium users)
-- Contact email: ooosyooo@gmail.com
+- Subscription details (monthly/annual, auto-renewal, cancellation process for both stores)
+- Refund policy links: Apple (https://reportaproblem.apple.com) and Google Play (https://support.google.com/googleplay/answer/2479637)
+- Privacy section as a link to the Privacy Policy (`../privacy/<locale>.html`) — never restate collection details here
+- Contact email: o3orbit.labs@gmail.com
 - Disclaimer that app is fitness tool, not medical device
 - Last updated date at bottom
+- Do not add self-imposed commitments beyond store/legal requirements (e.g., own refund rules — stores decide refunds)
 
 ## Deployment
 
 - Hosted on GitHub Pages
 - No build process required - static HTML files
 - Changes pushed to `main` branch are automatically deployed
-- Live URL: https://ooosyooo.github.io/eopueopu-terms
+- Live URL: https://eopueopu.o3orbit.app/terms
 
 ## AI Attribution Policy
 
@@ -61,5 +65,5 @@ This is a professional legal document repository. All content should appear as s
 
 ## Related Links
 
-- Privacy Policy: https://ooosyooo.github.io/eopueopu-privacy
-- Contact: ooosyooo@gmail.com
+- Privacy Policy: https://eopueopu.o3orbit.app/privacy
+- Contact: o3orbit.labs@gmail.com
