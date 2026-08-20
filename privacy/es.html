@@ -7,58 +7,90 @@
     <link rel="stylesheet" href="common.css">
 </head>
 <body>
+    <!-- Header -->
     <div class="header">
         <div class="header-content">
             <div class="logo">EopuEopu</div>
         </div>
     </div>
 
+    <!-- Main Container -->
     <div class="container">
+        <!-- Sidebar Navigation -->
         <nav class="sidebar">
             <div class="nav-title">Contenido</div>
             <ul class="nav-list">
                 <li class="nav-item"><a href="#section1" class="nav-link">1. Información Recopilada</a></li>
-                <li class="nav-item"><a href="#section2" class="nav-link">2. Propósito de Uso</a></li>
-                <li class="nav-item"><a href="#section3" class="nav-link">3. Retención y Eliminación</a></li>
-                <li class="nav-item"><a href="#section4" class="nav-link">4. Compartir con Terceros</a></li>
-                <li class="nav-item"><a href="#section5" class="nav-link">5. Procesamiento de Datos</a></li>
-                <li class="nav-item"><a href="#section6" class="nav-link">6. Sus Derechos</a></li>
-                <li class="nav-item"><a href="#section7" class="nav-link">7. Medidas de Seguridad</a></li>
-                <li class="nav-item"><a href="#section8" class="nav-link">8. Contacto</a></li>
+                <li class="nav-item"><a href="#section2" class="nav-link">2. Datos de Salud</a></li>
+                <li class="nav-item"><a href="#section3" class="nav-link">3. Propósito de Uso</a></li>
+                <li class="nav-item"><a href="#section4" class="nav-link">4. Retención y Eliminación</a></li>
+                <li class="nav-item"><a href="#section5" class="nav-link">5. Compartir con Terceros</a></li>
+                <li class="nav-item"><a href="#section6" class="nav-link">6. Procesamiento de Datos</a></li>
+                <li class="nav-item"><a href="#section7" class="nav-link">7. Sus Derechos</a></li>
+                <li class="nav-item"><a href="#section8" class="nav-link">8. Medidas de Seguridad</a></li>
+                <li class="nav-item"><a href="#section9" class="nav-link">9. Contacto</a></li>
             </ul>
         </nav>
 
+        <!-- Main Content -->
         <main class="content">
             <section id="section1">
                 <h2>1. Información Personal que Recopilamos</h2>
 
-                <h3>Todos los Usuarios</h3>
+                <h3>Usuarios que no han Iniciado Sesión</h3>
                 <ul>
-                    <li><strong>Datos de Entrenamiento de Natación</strong>: Distancia, tiempo, datos de vueltas, frecuencia cardíaca, estilo de natación, calorías (almacenados solo en el dispositivo)</li>
+                    <li><strong>Datos de Entrenamiento de Natación</strong>: Distancia, tiempo, datos de vueltas, frecuencia cardíaca, estilo de natación, calorías, información de la piscina (almacenados solo en el dispositivo)</li>
                 </ul>
 
-                <h3>Usuarios de Suscripción (Versión Pro)</h3>
+                <h3>Usuarios con Sesión Iniciada (Gratuitos y de Suscripción)</h3>
                 <ul>
-                    <li><strong>Cuenta de inicio de sesión social (Apple / Google)</strong>: Correo electrónico, identificador único</li>
+                    <li><strong>Información de la Cuenta</strong>: Correo electrónico, identificador único (inicio de sesión con Apple o Google)</li>
+                    <li><strong>Información de Perfil</strong>: Apodo, código de país, zona horaria</li>
+                    <li><strong>Datos de Entrenamiento de Natación</strong>: Los elementos anteriores, sincronizados en la nube (los usuarios gratuitos hasta un número determinado de sesiones; los suscriptores sin límite)</li>
+                </ul>
+
+                <h3>Usuarios de Suscripción</h3>
+                <ul>
                     <li><strong>Información de Suscripción</strong>: Estado de suscripción, fecha de renovación, ID de transacción</li>
-                    <li><strong>Información de Perfil</strong>: Apodo, código de país, clase de nadador</li>
-                    <li><strong>Datos de Entrenamiento de Natación</strong>: Distancia, tiempo, datos de vueltas, frecuencia cardíaca, estilo de natación, calorías (sincronización en la nube)</li>
-                    <li><strong>Información de Piscina</strong>: Nombre de la piscina, dirección (incluida en los registros de entrenamiento)</li>
+                </ul>
+
+                <h3>Información Recopilada Automáticamente</h3>
+                <ul>
+                    <li><strong>Datos de Análisis de Uso y Diagnóstico de Errores</strong>: Eventos de uso de funciones, informes de fallos, versión de la aplicación, modelo del dispositivo, versión del sistema operativo (Firebase Analytics y Crashlytics)</li>
+                    <li><strong>Token de Notificaciones Push</strong>: Identificador del dispositivo utilizado para enviar notificaciones</li>
                 </ul>
             </section>
 
             <section id="section2">
-                <h2>2. Propósito del Uso de Información Personal</h2>
+                <h2>2. Datos de Salud (Apple Health y Health Connect)</h2>
+
+                <p>EopuEopu lee sus registros de natación desde <strong>Apple Health (HealthKit) en iOS</strong> y <strong>Health Connect en Android</strong>. Los datos de salud se tratan únicamente conforme a los principios que se indican a continuación.</p>
+
                 <ul>
-                    <li>Autenticación de inicio de sesión social y verificación de identidad (Apple / Google)</li>
-                    <li>Gestión de suscripciones y procesamiento de pagos</li>
-                    <li>Sincronización de datos en la nube (usuarios de suscripción)</li>
-                    <li>Procesamiento de comentarios de usuarios para la mejora del servicio</li>
+                    <li><strong>Solo lectura</strong>: La aplicación únicamente lee los datos de salud; nunca escribe ni modifica datos en su aplicación de salud.</li>
+                    <li><strong>Datos que leemos</strong>: Entrenamientos de natación (distancia, tiempo, vueltas, estilo de natación), frecuencia cardíaca, calorías activas quemadas y ruta del ejercicio (natación en aguas abiertas)</li>
+                    <li><strong>Finalidad de uso</strong>: Se emplean exclusivamente para mostrar y analizar sus registros dentro de la aplicación y, cuando ha iniciado sesión, para calcular las clasificaciones.</li>
+                    <li><strong>Sin publicidad ni venta</strong>: Nunca utilizamos los datos de salud con fines publicitarios o de marketing, ni los vendemos a terceros ni los cedemos para fines de minería de datos.</li>
+                    <li><strong>Ruta del ejercicio (GPS)</strong>: Las rutas de natación en aguas abiertas se almacenan únicamente en el dispositivo y nunca se transmiten a nuestros servidores.</li>
+                    <li><strong>Revocación del permiso</strong>: Puede revocar el acceso en cualquier momento en iOS desde Ajustes &gt; Privacidad y seguridad &gt; Salud, o en Android desde los ajustes de Health Connect. Tras la revocación, los registros ya guardados en la aplicación se conservan; puede eliminarlos borrando la aplicación o dándose de baja.</li>
                 </ul>
             </section>
 
             <section id="section3">
-                <h2>3. Retención y Eliminación de Información Personal</h2>
+                <h2>3. Propósito del Uso de Información Personal</h2>
+                <ul>
+                    <li>Autenticación de inicio de sesión social y verificación de identidad (Apple / Google)</li>
+                    <li>Sincronización de los registros de natación en la nube y restauración al cambiar de dispositivo</li>
+                    <li>Prestación de funciones comunitarias como clasificaciones y niveles</li>
+                    <li>Gestión de suscripciones y procesamiento de pagos</li>
+                    <li>Análisis de uso para el diagnóstico de errores y la mejora del servicio</li>
+                    <li>Envío de notificaciones push</li>
+                    <li>Procesamiento de comentarios de usuarios</li>
+                </ul>
+            </section>
+
+            <section id="section4">
+                <h2>4. Retención y Eliminación de Información Personal</h2>
 
                 <h3>Período de Retención</h3>
                 <table>
@@ -74,7 +106,7 @@
                             <td>Hasta la eliminación de la aplicación</td>
                         </tr>
                         <tr>
-                            <td>Datos de Natación (Usuarios de Suscripción)</td>
+                            <td>Datos de Natación en la Nube (Usuarios con Sesión Iniciada)</td>
                             <td>Eliminación inmediata al darse de baja desde la aplicación</td>
                         </tr>
                         <tr>
@@ -84,6 +116,10 @@
                         <tr>
                             <td>Información de Perfil</td>
                             <td>Eliminación inmediata al darse de baja desde la aplicación</td>
+                        </tr>
+                        <tr>
+                            <td>Datos de Análisis de Uso y Diagnóstico de Errores</td>
+                            <td>Eliminación automática a más tardar 14 meses después de su recopilación</td>
                         </tr>
                         <tr>
                             <td>Registros de Suscripción y Pago</td>
@@ -108,13 +144,21 @@
                 </ul>
             </section>
 
-            <section id="section4">
-                <h2>4. Compartir Información Personal con Terceros</h2>
-                <p>EopuEopu no vende, alquila ni comparte su información personal con terceros.</p>
+            <section id="section5">
+                <h2>5. Compartir Información Personal con Terceros</h2>
+                <p>EopuEopu no vende, alquila ni comparte su información personal con terceros. En particular, los datos de salud nunca se utilizan con fines publicitarios o de marketing, ni se ceden a terceros.</p>
+
+                <h3>Información Visible para Otros Usuarios</h3>
+                <p>Si participa en las clasificaciones, la siguiente información se muestra a otros usuarios:</p>
+                <ul>
+                    <li>Apodo, país, clase de nadador y nivel</li>
+                    <li>Distancia y tiempo acumulados en el período correspondiente, ritmo medio y fecha de su última sesión de natación</li>
+                </ul>
+                <p>Su correo electrónico, su identificador de cuenta y el detalle de cada entrenamiento nunca se muestran. Puede dejar de aparecer en las clasificaciones borrando su apodo en la aplicación.</p>
             </section>
 
-            <section id="section5">
-                <h2>5. Delegación del Procesamiento de Información Personal</h2>
+            <section id="section6">
+                <h2>6. Delegación del Procesamiento de Información Personal</h2>
                 <table>
                     <thead>
                         <tr>
@@ -126,20 +170,20 @@
                     <tbody>
                         <tr>
                             <td>Google LLC</td>
-                            <td>Firebase Firestore (Almacenamiento en la Nube)</td>
+                            <td>Firebase (almacenamiento en la nube, inicio de sesión, notificaciones push), análisis de uso y diagnóstico de errores, facturación de Google Play</td>
                             <td>Estados Unidos</td>
                         </tr>
                         <tr>
                             <td>Apple Inc.</td>
-                            <td>Apple Sign-In, Facturación de Suscripción</td>
+                            <td>Apple Sign-In, facturación de suscripciones de App Store</td>
                             <td>Estados Unidos</td>
                         </tr>
                     </tbody>
                 </table>
             </section>
 
-            <section id="section6">
-                <h2>6. Derechos del Sujeto de la Información</h2>
+            <section id="section7">
+                <h2>7. Derechos del Sujeto de la Información</h2>
 
                 <h3>Solicitud de Acceso, Corrección y Eliminación de Información Personal</h3>
                 <ul>
@@ -150,8 +194,8 @@
                 <p>Para saber cómo eliminar tu cuenta y datos, consulta <a href="../account-deletion/es.html">Eliminación de cuenta y datos</a></p>
             </section>
 
-            <section id="section7">
-                <h2>7. Medidas de Protección de Información Personal</h2>
+            <section id="section8">
+                <h2>8. Medidas de Protección de Información Personal</h2>
                 <ul>
                     <li><strong>Cifrado</strong>: Información personal transmitida a través de canales de comunicación cifrados</li>
                     <li><strong>Control de Acceso</strong>: Derechos de acceso minimizados y operación de sistemas de control de acceso</li>
@@ -160,8 +204,8 @@
                 </ul>
             </section>
 
-            <section id="section8">
-                <h2>8. Responsable de Protección de Información Personal</h2>
+            <section id="section9">
+                <h2>9. Responsable de Protección de Información Personal</h2>
 
                 <div class="contact-section">
                     <div class="contact-title">Responsable de Protección de Información Personal</div>
@@ -176,10 +220,11 @@
         </main>
     </div>
 
+    <!-- Footer -->
     <footer class="footer">
-        <p>Fecha de Anuncio: 19 de agosto de 2026</p>
-        <p>Fecha de Entrada en Vigor: 26 de agosto de 2026</p>
-        <p style="margin-top: 16px;">Esta Política de Privacidad es efectiva a partir del 26 de agosto de 2026 y se anunciará 7 días antes de su implementación cuando se realicen cambios en las leyes o políticas.</p>
+        <p>Fecha de Anuncio: 20 de agosto de 2026</p>
+        <p>Fecha de Entrada en Vigor: 27 de agosto de 2026</p>
+        <p style="margin-top: 16px;">Esta Política de Privacidad es efectiva a partir del 27 de agosto de 2026 y se anunciará 7 días antes de su implementación cuando se realicen cambios en las leyes o políticas.</p>
     </footer>
 
     <script src="common.js"></script>

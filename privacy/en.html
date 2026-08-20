@@ -21,13 +21,14 @@
             <div class="nav-title">Contents</div>
             <ul class="nav-list">
                 <li class="nav-item"><a href="#section1" class="nav-link">1. Information Collected</a></li>
-                <li class="nav-item"><a href="#section2" class="nav-link">2. Purpose of Use</a></li>
-                <li class="nav-item"><a href="#section3" class="nav-link">3. Retention & Deletion</a></li>
-                <li class="nav-item"><a href="#section4" class="nav-link">4. Third-Party Sharing</a></li>
-                <li class="nav-item"><a href="#section5" class="nav-link">5. Data Processing</a></li>
-                <li class="nav-item"><a href="#section6" class="nav-link">6. Your Rights</a></li>
-                <li class="nav-item"><a href="#section7" class="nav-link">7. Security Measures</a></li>
-                <li class="nav-item"><a href="#section8" class="nav-link">8. Contact</a></li>
+                <li class="nav-item"><a href="#section2" class="nav-link">2. Health Data</a></li>
+                <li class="nav-item"><a href="#section3" class="nav-link">3. Purpose of Use</a></li>
+                <li class="nav-item"><a href="#section4" class="nav-link">4. Retention & Deletion</a></li>
+                <li class="nav-item"><a href="#section5" class="nav-link">5. Third-Party Sharing</a></li>
+                <li class="nav-item"><a href="#section6" class="nav-link">6. Data Processing</a></li>
+                <li class="nav-item"><a href="#section7" class="nav-link">7. Your Rights</a></li>
+                <li class="nav-item"><a href="#section8" class="nav-link">8. Security Measures</a></li>
+                <li class="nav-item"><a href="#section9" class="nav-link">9. Contact</a></li>
             </ul>
         </nav>
 
@@ -36,33 +37,60 @@
             <section id="section1">
                 <h2>1. Information We Collect</h2>
 
-                <h3>All Users</h3>
+                <h3>Users Who Are Not Signed In</h3>
                 <ul>
-                    <li><strong>Swimming Workout Data</strong>: Distance, time, lap data, heart rate, stroke style, calories (stored locally on device)</li>
+                    <li><strong>Swimming Workout Data</strong>: Distance, time, lap data, heart rate, stroke style, calories, pool information (stored only on your device)</li>
                 </ul>
 
-                <h3>Subscription Users (Pro Version)</h3>
+                <h3>Signed-In Users (Free and Subscription Alike)</h3>
                 <ul>
-                    <li><strong>Social Sign-In Account (Apple / Google)</strong>: Email, unique identifier</li>
+                    <li><strong>Account Information</strong>: Email, unique identifier (Apple or Google Sign-In)</li>
+                    <li><strong>Profile Information</strong>: Nickname, country code, time zone</li>
+                    <li><strong>Swimming Workout Data</strong>: The items above, synced to the cloud (free users up to a set number of sessions; subscribers without limit)</li>
+                </ul>
+
+                <h3>Subscription Users</h3>
+                <ul>
                     <li><strong>Subscription Information</strong>: Subscription status, renewal date, transaction ID</li>
-                    <li><strong>Profile Information</strong>: Nickname, country code, swimmer class</li>
-                    <li><strong>Swimming Workout Data</strong>: Distance, time, lap data, heart rate, stroke style, calories (cloud sync)</li>
-                    <li><strong>Pool Information</strong>: Pool name, address (included in workout records)</li>
+                </ul>
+
+                <h3>Information Collected Automatically</h3>
+                <ul>
+                    <li><strong>Usage Analytics and Diagnostics</strong>: Feature usage events, crash reports, app version, device model, OS version (Firebase Analytics and Crashlytics)</li>
+                    <li><strong>Push Notification Token</strong>: A device identifier used to deliver notifications</li>
                 </ul>
             </section>
 
             <section id="section2">
-                <h2>2. Purpose of Use</h2>
+                <h2>2. Health Data (Apple Health &amp; Health Connect)</h2>
+
+                <p>EopuEopu reads your swimming records from <strong>Apple Health (HealthKit) on iOS</strong> and <strong>Health Connect on Android</strong>. Health data is handled only according to the principles below.</p>
+
                 <ul>
-                    <li>Social sign-in authentication and identity verification (Apple / Google)</li>
-                    <li>Subscription management and payment processing</li>
-                    <li>Cloud data synchronization (subscription users)</li>
-                    <li>Processing user feedback for service improvement</li>
+                    <li><strong>Read-only</strong>: The app only reads health data. It never writes to or modifies data in your health app.</li>
+                    <li><strong>What we read</strong>: Swimming workouts (distance, time, laps, stroke style), heart rate, active energy burned, and exercise route (open water swims)</li>
+                    <li><strong>How we use it</strong>: Solely to display and analyze your records inside the app and, when you are signed in, to calculate rankings.</li>
+                    <li><strong>No advertising, no sale</strong>: We never use health data for advertising or marketing, and we never sell it to third parties or provide it for data mining purposes.</li>
+                    <li><strong>Exercise route (GPS)</strong>: Open water swim routes are stored only on your device and are never transmitted to our servers.</li>
+                    <li><strong>Withdrawing permission</strong>: You may revoke access at any time in iOS Settings &gt; Privacy &amp; Security &gt; Health, or in Android's Health Connect settings. Records already saved in the app remain after revocation; you can remove them by deleting the app or your account.</li>
                 </ul>
             </section>
 
             <section id="section3">
-                <h2>3. Data Retention and Deletion</h2>
+                <h2>3. Purpose of Use</h2>
+                <ul>
+                    <li>Social sign-in authentication and identity verification (Apple / Google)</li>
+                    <li>Cloud synchronization of swimming records and restoration when changing devices</li>
+                    <li>Providing community features such as rankings and levels</li>
+                    <li>Subscription management and payment processing</li>
+                    <li>Usage analysis for diagnosing errors and improving the service</li>
+                    <li>Sending push notifications</li>
+                    <li>Processing user feedback</li>
+                </ul>
+            </section>
+
+            <section id="section4">
+                <h2>4. Data Retention and Deletion</h2>
 
                 <h3>Retention Period</h3>
                 <table>
@@ -78,7 +106,7 @@
                             <td>Until app deletion</td>
                         </tr>
                         <tr>
-                            <td>Cloud Swimming Data (Subscription Users)</td>
+                            <td>Cloud Swimming Data (Signed-In Users)</td>
                             <td>Deleted immediately upon in-app account deletion</td>
                         </tr>
                         <tr>
@@ -90,7 +118,11 @@
                             <td>Deleted immediately upon in-app account deletion</td>
                         </tr>
                         <tr>
-                            <td>Subscription & Payment Records</td>
+                            <td>Usage Analytics and Diagnostics</td>
+                            <td>Automatically deleted no later than 14 months after collection</td>
+                        </tr>
+                        <tr>
+                            <td>Subscription &amp; Payment Records</td>
                             <td>Anonymized, then retained 5 years from contract termination (legal requirement)</td>
                         </tr>
                     </tbody>
@@ -112,13 +144,21 @@
                 </ul>
             </section>
 
-            <section id="section4">
-                <h2>4. Third-Party Data Sharing</h2>
-                <p>EopuEopu does not sell, rent, or share your personal information with third parties.</p>
+            <section id="section5">
+                <h2>5. Third-Party Data Sharing</h2>
+                <p>EopuEopu does not sell, rent, or share your personal information with third parties. In particular, health data is never used for advertising or marketing, nor provided to third parties.</p>
+
+                <h3>Information Visible to Other Users</h3>
+                <p>If you take part in the rankings, the following is shown to other users:</p>
+                <ul>
+                    <li>Nickname, country, swimmer class and level</li>
+                    <li>Total distance and time for the period, average pace, and date of your last swim</li>
+                </ul>
+                <p>Your email, account identifier, and individual workout details are never shown. You can stop appearing in the rankings by clearing your nickname in the app.</p>
             </section>
 
-            <section id="section5">
-                <h2>5. Data Processing Partners</h2>
+            <section id="section6">
+                <h2>6. Data Processing Partners</h2>
                 <table>
                     <thead>
                         <tr>
@@ -130,20 +170,20 @@
                     <tbody>
                         <tr>
                             <td>Google LLC</td>
-                            <td>Firebase Firestore (Cloud Storage)</td>
+                            <td>Firebase (cloud storage, sign-in, push notifications), usage analytics and crash diagnostics, Google Play billing</td>
                             <td>United States</td>
                         </tr>
                         <tr>
                             <td>Apple Inc.</td>
-                            <td>Apple Sign-In, Subscription Billing</td>
+                            <td>Apple Sign-In, App Store subscription billing</td>
                             <td>United States</td>
                         </tr>
                     </tbody>
                 </table>
             </section>
 
-            <section id="section6">
-                <h2>6. Your Rights</h2>
+            <section id="section7">
+                <h2>7. Your Rights</h2>
 
                 <h3>Right to Access, Correct, and Delete Personal Information</h3>
                 <ul>
@@ -154,8 +194,8 @@
                 <p>For how to delete your account and data, see <a href="../account-deletion/en.html">Account &amp; Data Deletion</a></p>
             </section>
 
-            <section id="section7">
-                <h2>7. Security Measures</h2>
+            <section id="section8">
+                <h2>8. Security Measures</h2>
                 <ul>
                     <li><strong>Encryption</strong>: Personal information transmitted through encrypted communication channels</li>
                     <li><strong>Access Control</strong>: Minimized access rights and operation of access control systems</li>
@@ -164,8 +204,8 @@
                 </ul>
             </section>
 
-            <section id="section8">
-                <h2>8. Privacy Officer</h2>
+            <section id="section9">
+                <h2>9. Privacy Officer</h2>
 
                 <div class="contact-section">
                     <div class="contact-title">Privacy Officer</div>
@@ -182,9 +222,9 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>Announcement Date: August 19, 2026</p>
-        <p>Effective Date: August 26, 2026</p>
-        <p style="margin-top: 16px;">This Privacy Policy is effective from August 26, 2026, and will be announced 7 days prior to implementation when changes are made to laws or policies.</p>
+        <p>Announcement Date: August 20, 2026</p>
+        <p>Effective Date: August 27, 2026</p>
+        <p style="margin-top: 16px;">This Privacy Policy is effective from August 27, 2026, and will be announced 7 days prior to implementation when changes are made to laws or policies.</p>
     </footer>
 
     <script src="common.js"></script>

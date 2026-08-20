@@ -17,42 +17,71 @@
             <div class="nav-title">Contenu</div>
             <ul class="nav-list">
                 <li class="nav-item"><a href="#section1" class="nav-link">1. Informations Collectées</a></li>
-                <li class="nav-item"><a href="#section2" class="nav-link">2. Finalité d'Utilisation</a></li>
-                <li class="nav-item"><a href="#section3" class="nav-link">3. Conservation et Suppression</a></li>
-                <li class="nav-item"><a href="#section4" class="nav-link">4. Partage avec des Tiers</a></li>
-                <li class="nav-item"><a href="#section5" class="nav-link">5. Traitement des Données</a></li>
-                <li class="nav-item"><a href="#section6" class="nav-link">6. Vos Droits</a></li>
-                <li class="nav-item"><a href="#section7" class="nav-link">7. Mesures de Sécurité</a></li>
-                <li class="nav-item"><a href="#section8" class="nav-link">8. Contact</a></li>
+                <li class="nav-item"><a href="#section2" class="nav-link">2. Données de Santé</a></li>
+                <li class="nav-item"><a href="#section3" class="nav-link">3. Finalité d'Utilisation</a></li>
+                <li class="nav-item"><a href="#section4" class="nav-link">4. Conservation et Suppression</a></li>
+                <li class="nav-item"><a href="#section5" class="nav-link">5. Partage avec des Tiers</a></li>
+                <li class="nav-item"><a href="#section6" class="nav-link">6. Traitement des Données</a></li>
+                <li class="nav-item"><a href="#section7" class="nav-link">7. Vos Droits</a></li>
+                <li class="nav-item"><a href="#section8" class="nav-link">8. Mesures de Sécurité</a></li>
+                <li class="nav-item"><a href="#section9" class="nav-link">9. Contact</a></li>
             </ul>
         </nav>
         <main class="content">
             <section id="section1">
                 <h2>1. Informations Personnelles que Nous Collectons</h2>
-                <h3>Tous les Utilisateurs</h3>
+
+                <h3>Utilisateurs Non Connectés</h3>
                 <ul>
-                    <li><strong>Données d'Entraînement de Natation</strong> : Distance, temps, données de tours, fréquence cardiaque, style de nage, calories (stockées localement sur l'appareil)</li>
+                    <li><strong>Données d'Entraînement de Natation</strong> : Distance, temps, données de tours, fréquence cardiaque, style de nage, calories, informations de piscine (stockées uniquement sur l'appareil)</li>
                 </ul>
-                <h3>Utilisateurs Abonnés (Version Pro)</h3>
+
+                <h3>Utilisateurs Connectés (Version Gratuite et Abonnés)</h3>
                 <ul>
-                    <li><strong>Compte de connexion sociale (Apple / Google)</strong> : E-mail, identifiant unique</li>
+                    <li><strong>Informations de Compte</strong> : E-mail, identifiant unique (connexion Apple ou Google)</li>
+                    <li><strong>Informations de Profil</strong> : Pseudo, code pays, fuseau horaire</li>
+                    <li><strong>Données d'Entraînement de Natation</strong> : Les éléments ci-dessus, synchronisés vers le cloud (nombre limité de séances pour les utilisateurs gratuits, sans limite pour les abonnés)</li>
+                </ul>
+
+                <h3>Utilisateurs Abonnés</h3>
+                <ul>
                     <li><strong>Informations d'Abonnement</strong> : Statut d'abonnement, date de renouvellement, ID de transaction</li>
-                    <li><strong>Informations de Profil</strong> : Pseudo, code pays, classe de nageur</li>
-                    <li><strong>Données d'Entraînement de Natation</strong> : Distance, temps, données de tours, fréquence cardiaque, style de nage, calories (synchronisation cloud)</li>
-                    <li><strong>Informations de Piscine</strong> : Nom de la piscine, adresse (incluses dans les enregistrements d'entraînement)</li>
+                </ul>
+
+                <h3>Informations Collectées Automatiquement</h3>
+                <ul>
+                    <li><strong>Analyse d'Utilisation et Diagnostic d'Erreurs</strong> : Événements d'utilisation des fonctionnalités, rapports de plantage, version de l'application, modèle d'appareil, version du système d'exploitation (Firebase Analytics et Crashlytics)</li>
+                    <li><strong>Jeton de Notification Push</strong> : Identifiant d'appareil utilisé pour l'envoi des notifications</li>
                 </ul>
             </section>
             <section id="section2">
-                <h2>2. Finalité de l'Utilisation des Informations Personnelles</h2>
+                <h2>2. Données de Santé (Apple Health &amp; Health Connect)</h2>
+
+                <p>EopuEopu lit vos enregistrements de natation depuis <strong>Apple Health (HealthKit) sur iOS</strong> et <strong>Health Connect sur Android</strong>. Les données de santé sont traitées exclusivement selon les principes ci-dessous.</p>
+
                 <ul>
-                    <li>Authentification par connexion sociale et vérification d'identité (Apple / Google)</li>
-                    <li>Gestion des abonnements et traitement des paiements</li>
-                    <li>Synchronisation des données cloud (utilisateurs abonnés)</li>
-                    <li>Traitement des retours utilisateurs pour l'amélioration du service</li>
+                    <li><strong>Lecture seule</strong> : L'application se contente de lire les données de santé. Elle n'écrit jamais dans votre application de santé et n'y modifie aucune donnée.</li>
+                    <li><strong>Données lues</strong> : Entraînements de natation (distance, temps, tours, style de nage), fréquence cardiaque, calories dépensées et itinéraire d'entraînement (nage en eau libre)</li>
+                    <li><strong>Utilisation</strong> : Uniquement pour afficher et analyser vos enregistrements au sein de l'application et, lorsque vous êtes connecté, pour calculer les classements.</li>
+                    <li><strong>Aucune publicité, aucune vente</strong> : Nous n'utilisons jamais les données de santé à des fins publicitaires ou marketing, et nous ne les vendons pas à des tiers ni ne les fournissons à des fins d'exploration de données.</li>
+                    <li><strong>Itinéraire d'entraînement (GPS)</strong> : Les itinéraires de nage en eau libre sont stockés uniquement sur votre appareil et ne sont jamais transmis à nos serveurs.</li>
+                    <li><strong>Retrait de l'autorisation</strong> : Vous pouvez révoquer l'accès à tout moment dans Réglages &gt; Confidentialité et sécurité &gt; Santé sur iOS, ou dans les paramètres de Health Connect sur Android. Les enregistrements déjà stockés dans l'application subsistent après la révocation ; vous pouvez les effacer en supprimant l'application ou votre compte.</li>
                 </ul>
             </section>
             <section id="section3">
-                <h2>3. Conservation et Suppression des Informations Personnelles</h2>
+                <h2>3. Finalité de l'Utilisation des Informations Personnelles</h2>
+                <ul>
+                    <li>Authentification par connexion sociale et vérification d'identité (Apple / Google)</li>
+                    <li>Synchronisation cloud des enregistrements de natation et restauration lors d'un changement d'appareil</li>
+                    <li>Fourniture des fonctionnalités communautaires telles que les classements et les niveaux</li>
+                    <li>Gestion des abonnements et traitement des paiements</li>
+                    <li>Analyse d'utilisation à des fins de diagnostic d'erreurs et d'amélioration du service</li>
+                    <li>Envoi de notifications push</li>
+                    <li>Traitement des retours utilisateurs</li>
+                </ul>
+            </section>
+            <section id="section4">
+                <h2>4. Conservation et Suppression des Informations Personnelles</h2>
                 <h3>Période de Conservation</h3>
                 <table>
                     <thead>
@@ -67,7 +96,7 @@
                             <td>Jusqu'à la suppression de l'application</td>
                         </tr>
                         <tr>
-                            <td>Données de Natation (Utilisateurs Abonnés)</td>
+                            <td>Données de Natation dans le Cloud (Utilisateurs Connectés)</td>
                             <td>Suppression immédiate lors de la suppression du compte dans l'application</td>
                         </tr>
                         <tr>
@@ -77,6 +106,10 @@
                         <tr>
                             <td>Informations de Profil</td>
                             <td>Suppression immédiate lors de la suppression du compte dans l'application</td>
+                        </tr>
+                        <tr>
+                            <td>Données d'Analyse d'Utilisation et de Diagnostic d'Erreurs</td>
+                            <td>Suppression automatique au plus tard 14 mois après la collecte</td>
                         </tr>
                         <tr>
                             <td>Enregistrements d'Abonnement et de Paiement</td>
@@ -98,12 +131,20 @@
                     <li><strong>Méthode</strong>: Suppression définitive rendant les fichiers électroniques irrécupérables</li>
                 </ul>
             </section>
-            <section id="section4">
-                <h2>4. Partage d'Informations Personnelles avec des Tiers</h2>
-                <p>EopuEopu ne vend, ne loue ni ne partage vos informations personnelles avec des tiers.</p>
-            </section>
             <section id="section5">
-                <h2>5. Délégation du Traitement des Informations Personnelles</h2>
+                <h2>5. Partage d'Informations Personnelles avec des Tiers</h2>
+                <p>EopuEopu ne vend, ne loue ni ne partage vos informations personnelles avec des tiers. En particulier, les données de santé ne sont jamais utilisées à des fins publicitaires ou marketing, ni communiquées à des tiers.</p>
+
+                <h3>Informations Visibles par les Autres Utilisateurs</h3>
+                <p>Si vous participez aux classements, les informations suivantes sont visibles par les autres utilisateurs :</p>
+                <ul>
+                    <li>Pseudo, pays, classe de nageur et niveau</li>
+                    <li>Distance et temps cumulés sur la période, allure moyenne et date de votre dernière nage</li>
+                </ul>
+                <p>Votre e-mail, votre identifiant de compte et le détail de chaque entraînement ne sont jamais affichés. Vous pouvez cesser d'apparaître dans les classements en effaçant votre pseudo dans l'application.</p>
+            </section>
+            <section id="section6">
+                <h2>6. Délégation du Traitement des Informations Personnelles</h2>
                 <table>
                     <thead>
                         <tr>
@@ -115,19 +156,19 @@
                     <tbody>
                         <tr>
                             <td>Google LLC</td>
-                            <td>Firebase Firestore (Stockage Cloud)</td>
+                            <td>Firebase (stockage cloud, connexion, notifications push), analyse d'utilisation et diagnostic d'erreurs, paiement Google Play</td>
                             <td>États-Unis</td>
                         </tr>
                         <tr>
                             <td>Apple Inc.</td>
-                            <td>Apple Sign-In, Facturation d'Abonnement</td>
+                            <td>Apple Sign-In, paiement des abonnements App Store</td>
                             <td>États-Unis</td>
                         </tr>
                     </tbody>
                 </table>
             </section>
-            <section id="section6">
-                <h2>6. Droits du Sujet des Informations</h2>
+            <section id="section7">
+                <h2>7. Droits du Sujet des Informations</h2>
                 <h3>Demande d'Accès, de Correction et de Suppression d'Informations Personnelles</h3>
                 <ul>
                     <li><strong>Méthode de Demande</strong> : Envoyer un email au contact ci-dessous</li>
@@ -136,8 +177,8 @@
                 </ul>
                 <p>Pour savoir comment supprimer votre compte et vos données, voir <a href="../account-deletion/fr.html">Suppression du compte et des données</a></p>
             </section>
-            <section id="section7">
-                <h2>7. Mesures de Protection des Informations Personnelles</h2>
+            <section id="section8">
+                <h2>8. Mesures de Protection des Informations Personnelles</h2>
                 <ul>
                     <li><strong>Chiffrement</strong> : Informations personnelles transmises via des canaux de communication chiffrés</li>
                     <li><strong>Contrôle d'Accès</strong> : Droits d'accès minimisés et fonctionnement de systèmes de contrôle d'accès</li>
@@ -145,8 +186,8 @@
                     <li><strong>Protection du Stockage</strong> : Mesures de protection physique et technique pour le stockage sécurisé des informations personnelles</li>
                 </ul>
             </section>
-            <section id="section8">
-                <h2>8. Responsable de la Protection des Informations Personnelles</h2>
+            <section id="section9">
+                <h2>9. Responsable de la Protection des Informations Personnelles</h2>
                 <div class="contact-section">
                     <div class="contact-title">Responsable de la Protection des Informations Personnelles</div>
                     <div class="contact-item">
@@ -159,9 +200,9 @@
         </main>
     </div>
     <footer class="footer">
-        <p>Date d'Annonce : 19 août 2026</p>
-        <p>Date d'Entrée en Vigueur : 26 août 2026</p>
-        <p style="margin-top: 16px;">Cette Politique de Confidentialité est effective à partir du 26 août 2026 et sera annoncée 7 jours avant sa mise en œuvre lors de modifications des lois ou des politiques.</p>
+        <p>Date d'Annonce : 20 août 2026</p>
+        <p>Date d'Entrée en Vigueur : 27 août 2026</p>
+        <p style="margin-top: 16px;">Cette Politique de Confidentialité est effective à partir du 27 août 2026 et sera annoncée 7 jours avant sa mise en œuvre lors de modifications des lois ou des politiques.</p>
     </footer>
     <script src="common.js"></script>
 </body>
